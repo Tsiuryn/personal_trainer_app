@@ -8,7 +8,12 @@ class AbTrainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(child: Text('AbTrainPage', style: TextStyle(color: AppColors.yellow),),),
+      body: Center(
+        child: Text(
+          'AbTrainPage',
+          style: TextStyle(color: AppColors.yellow),
+        ),
+      ),
     );
   }
 }

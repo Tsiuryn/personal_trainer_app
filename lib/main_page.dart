@@ -2,10 +2,7 @@ import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_trainer_app/app/app_colors.dart';
 import 'package:personal_trainer_app/pages/statistic_page.dart';
-import 'package:personal_trainer_app/pages/workout/ab_train_page.dart';
-import 'package:personal_trainer_app/pages/workout/pull_ups_page.dart';
 import 'package:personal_trainer_app/pages/settings_page.dart';
-import 'package:personal_trainer_app/pages/workout/push_ups_page.dart';
 import 'package:personal_trainer_app/pages/workout_page.dart';
 
 class MainPage extends StatefulWidget {

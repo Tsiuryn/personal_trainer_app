@@ -24,10 +24,8 @@ class MyApp extends StatelessWidget {
 }
 
 extension BuildContextExtension on BuildContext {
-
-  Future<T?> push<T>(Widget widget)
-  => Navigator.of(this).push<T>(MaterialPageRoute(builder: (_) => widget));
+  Future<T?> push<T>(Widget widget) =>
+      Navigator.of(this).push<T>(MaterialPageRoute(builder: (_) => widget));
 
   void pop<T>(Object? result) => Navigator.of(this).pop(result);
 }
-
