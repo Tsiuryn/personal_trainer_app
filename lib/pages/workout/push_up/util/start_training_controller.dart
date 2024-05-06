@@ -5,20 +5,16 @@ import 'package:personal_trainer_app/domain/entity/push_up/push_up_trainer.dart'
 
 const defaultSec = 90;
 
-class StartTrainingController {
-  final Training training;
-  final State state;
-  final VoidCallback onSuccess;
-
-  StartTrainingController(
-    this.state, {
-    required this.training,
-    required this.onSuccess,
-  });
-
+mixin StartTrainingController<T extends StatefulWidget> on State<T> {
+  @override
   void dispose() {
     _timer?.cancel();
+    super.dispose();
   }
+
+  Training get training;
+
+  void onSuccess();
 
   int _currentIndex = 0;
 
@@ -54,7 +50,7 @@ class StartTrainingController {
   void onTapAction() {
     if(isFinishState) return;
 
-    state.setState(() {
+    setState(() {
       _changeState();
       _nextIndex();
       _startStopTimer();
@@ -85,7 +81,7 @@ class StartTrainingController {
     if (!isWorkNow) {
       _sec = defaultSec;
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        state.setState(() {
+        setState(() {
           _sec--;
           if (_sec == 0) {
             _timer?.cancel();

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:personal_trainer_app/domain/entity/push_up/push_up_trainer.dart';
 import 'package:personal_trainer_app/domain/gateway/push_up_gateway.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _pushUpTrainer = 'pushUpTrainer';
@@ -11,7 +12,9 @@ class PushUpGatewayImpl implements PushUpGateway {
   Future<SharedPreferences> get prefs async =>
       await SharedPreferences.getInstance();
 
-  const PushUpGatewayImpl();
+  PushUpGatewayImpl();
+
+  final PublishSubject<PushUpTrainer> _subject = PublishSubject();
 
   @override
   Future<PushUpTrainer> getPushUpTrainer() async {
@@ -41,6 +44,20 @@ class PushUpGatewayImpl implements PushUpGateway {
         return 1;
     }
   }
+
+  @override
+  Future<void> setPushUpTrainer(PushUpTrainer pushUpTrainer) async{
+    _subject.add(pushUpTrainer);
+    final json = pushUpTrainer.toJson();
+    final pf = await prefs;
+
+    await pf.setString(_pushUpTrainer, jsonEncode(json));
+  }
+
+  @override
+  Stream<PushUpTrainer> trainerStream() {
+    return _subject.stream;
+  }
 }
 
 class _PushUpsCalculator {
@@ -55,7 +72,7 @@ class _PushUpsCalculator {
       int minReps = initialReps + (level - 1) * repsIncrement;
       int maxReps = minReps + 4;
 
-      log("Уровень $level: Отжимания от $minReps до $maxReps");
+      // log("Уровень $level: Отжимания от $minReps до $maxReps");
 
       List<Training> training = [];
 
@@ -67,7 +84,7 @@ class _PushUpsCalculator {
         int fourthSetReps = firstSetReps - 1;
         int fifthSetReps = firstSetReps + 3;
 
-        log("\nТренировка $workout: $firstSetReps-$secondSetReps-$thirdSetReps-$fourthSetReps-$fifthSetReps");
+        // log("\nТренировка $workout: $firstSetReps-$secondSetReps-$thirdSetReps-$fourthSetReps-$fifthSetReps");
 
         List<int> pushUpsCount = [];
 

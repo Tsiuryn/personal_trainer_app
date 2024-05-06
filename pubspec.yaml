@@ -15,6 +15,9 @@ dependencies:
   json_annotation: ^4.8.1
   cupertino_icons: ^1.0.2
   custom_navigation_bar: ^0.8.2
+  get_it: ^7.7.0
+  flutter_bloc: ^8.1.5
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:

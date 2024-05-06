@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:personal_trainer_app/domain/entity/push_up/push_up_trainer.dart';
 import 'package:personal_trainer_app/main.dart';
 import 'package:personal_trainer_app/pages/workout/push_up/util/start_training_controller.dart';
@@ -17,31 +15,16 @@ class StartTrainingPage extends StatefulWidget {
   State<StartTrainingPage> createState() => _StartTrainingPageState();
 }
 
-class _StartTrainingPageState extends State<StartTrainingPage> {
-  late StartTrainingController _startTrainingController;
-
-  @override
-  void initState() {
-    super.initState();
-    _startTrainingController = StartTrainingController(
-      this,
-      training: widget.training,
-      onSuccess: (){
-        _showDialog().then((value) {
-            _startTrainingController.dispose();
-            context.pop(true);
-        });
-      },
-    );
-  }
-
+class _StartTrainingPageState extends State<StartTrainingPage> with StartTrainingController {
   Future<T?> _showDialog<T>({
     bool isPop = false,
-  }) async{
+  }) async {
     final title = isPop
         ? 'Тренировка не завершена. При выходе прогресс будет потерян!'
         : 'Тренировка успешно завершена!';
-    return showDialog(
+    const style = TextStyle(fontSize: 24, fontWeight: FontWeight.w500);
+
+    return showDialog<T>(
         context: context,
         barrierDismissible: false,
         builder: (_) {
@@ -50,48 +33,53 @@ class _StartTrainingPageState extends State<StartTrainingPage> {
             actions: [
               if (isPop)
                 TextButton(
-                    onPressed: () {
-                      context.pop();
-                    },
-                    child: const Text('Отмена')),
+                  onPressed: () {
+                    context.pop();
+                  },
+                  child: Text(
+                    'Отмена',
+                    style: style.copyWith(color: Colors.green),
+                  ),
+                ),
               if (isPop)
                 TextButton(
                     onPressed: () {
                       context.pop(true);
                     },
-                    child: const Text('Выйти')),
+                    child: const Text(
+                      'Выйти',
+                      style: style,
+                    )),
               if (!isPop)
                 TextButton(
                     onPressed: () {
                       context.pop(true);
                     },
-                    child: const Text('Ok'))
+                    child: const Text(
+                      'Ok',
+                      style: style,
+                    ))
             ],
           );
         });
   }
 
   @override
-  void dispose() {
-    _startTrainingController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final currentTime = _startTrainingController.currentTime();
-    final message = _startTrainingController.isWorkNow ? "Работаем!" : "Отдых";
+    final time = currentTime();
+    final message = isWorkNow ? "Работаем!" : "Отдых";
     final titleButton =
-        _startTrainingController.isWorkNow ? 'Отдых' : 'Поехали';
+        isWorkNow ? 'Отдых' : 'Поехали';
     final bgColor =
-        _startTrainingController.isWorkNow ? Colors.red : Colors.green;
+        isWorkNow ? Colors.red : Colors.green;
 
     return PopScope(
       onPopInvoked: (_) {
-        if (!_startTrainingController.isFinishState) {
+        if (!isFinishState) {
           _showDialog(
-            isPop: true,).then((value) {
-            if(value != null && value == true){
+            isPop: true,
+          ).then((value) {
+            if (value != null && value == true) {
               context.pop();
             }
           });
@@ -103,12 +91,13 @@ class _StartTrainingPageState extends State<StartTrainingPage> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              if (_startTrainingController.isFinishState) {
+              if (isFinishState) {
                 context.pop(true);
               } else {
                 _showDialog(
-                  isPop: true,).then((value) {
-                  if(value != null && value == true){
+                  isPop: true,
+                ).then((value) {
+                  if (value != null && value == true) {
                     context.pop();
                   }
                 });
@@ -128,12 +117,12 @@ class _StartTrainingPageState extends State<StartTrainingPage> {
                     style: TextStyle(fontSize: 44, color: bgColor),
                   ),
                   ListSteps(
-                    steps: _startTrainingController.training.pushUpsCount,
-                    currentIndex: _startTrainingController.currentIndex,
+                    steps: training.pushUpsCount,
+                    currentIndex: currentIndex,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Visibility(
-                    visible: currentTime != null,
+                    visible: time != null,
                     maintainState: true,
                     maintainSize: true,
                     maintainAnimation: true,
@@ -141,7 +130,7 @@ class _StartTrainingPageState extends State<StartTrainingPage> {
                       alignment: Alignment.center,
                       children: [
                         Text(
-                          currentTime ?? '',
+                          time ?? '',
                           style: const TextStyle(
                               fontSize: 44, fontWeight: FontWeight.w500),
                         ),
@@ -149,7 +138,7 @@ class _StartTrainingPageState extends State<StartTrainingPage> {
                           height: 90,
                           width: 130,
                           child: CircularProgressIndicator(
-                            value: _startTrainingController.getPercentTime(),
+                            value: getPercentTime(),
                             strokeWidth: 8,
                             color: bgColor,
                           ),
@@ -161,12 +150,12 @@ class _StartTrainingPageState extends State<StartTrainingPage> {
                   Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: IgnorePointer(
-                      ignoring: _startTrainingController.isFinishState,
+                      ignoring: isFinishState,
                       child: Opacity(
                         opacity:
-                            _startTrainingController.isFinishState ? .2 : 1,
+                            isFinishState ? .2 : 1,
                         child: OutlinedButton(
-                          onPressed: _startTrainingController.onTapAction,
+                          onPressed: onTapAction,
                           child: Text(titleButton),
                         ),
                       ),
@@ -180,6 +169,16 @@ class _StartTrainingPageState extends State<StartTrainingPage> {
       ),
     );
   }
+
+  @override
+  void onSuccess() {
+    _showDialog().then((value) {
+      context.pop(true);
+    });
+  }
+
+  @override
+  Training get training => widget.training;
 }
 
 class ListSteps extends StatelessWidget {

@@ -12,11 +12,12 @@ class ProgressWidget extends StatelessWidget {
       children: [
         ...training.map((e) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2,),
-          child: SizedBox(
-            height: 4,
-            width: 8,
-            child: ColoredBox(
-              color: e.done ? Colors.lightGreen : Colors.grey,
+          child: Container(
+            height: 8,
+            width: 16,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              color: e.done ? Colors.green : Colors.grey,
             ),
           ),
         )).toList(),

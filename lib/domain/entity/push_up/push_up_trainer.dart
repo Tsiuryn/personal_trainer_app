@@ -15,6 +15,16 @@ class PushUpTrainer {
       _$PushUpTrainerFromJson(json);
 
   Map<String, dynamic> toJson() => _$PushUpTrainerToJson(this);
+
+  PushUpTrainer.empty(): levels = [];
+
+  PushUpTrainer copyWith({
+    List<TrainingLevel>? levels,
+  }) {
+    return PushUpTrainer(
+      levels: levels ?? this.levels,
+    );
+  }
 }
 
 @JsonSerializable()
@@ -39,6 +49,22 @@ class TrainingLevel {
       _$TrainingLevelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrainingLevelToJson(this);
+
+  TrainingLevel.empty(): level = -1, minRange = -1, maxRange = -1, training = [];
+
+  TrainingLevel copyWith({
+    int? level,
+    int? minRange,
+    int? maxRange,
+    List<Training>? training,
+  }) {
+    return TrainingLevel(
+      level: level ?? this.level,
+      minRange: minRange ?? this.minRange,
+      maxRange: maxRange ?? this.maxRange,
+      training: training ?? this.training,
+    );
+  }
 }
 
 @JsonSerializable()
@@ -57,4 +83,16 @@ class Training {
       _$TrainingFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrainingToJson(this);
+
+  Training.empty(): pushUpsCount = [], done = false;
+
+  Training copyWith({
+    List<int>? pushUpsCount,
+    bool? done,
+  }) {
+    return Training(
+      pushUpsCount: pushUpsCount ?? this.pushUpsCount,
+      done: done ?? this.done,
+    );
+  }
 }
