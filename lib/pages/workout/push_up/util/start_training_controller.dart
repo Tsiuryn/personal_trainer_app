@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:personal_trainer_app/common/util/seconds_converter.dart';
 import 'package:personal_trainer_app/domain/entity/push_up/push_up_trainer.dart';
 
 const defaultSec = 90;
@@ -26,10 +27,8 @@ mixin StartTrainingController<T extends StatefulWidget> on State<T> {
   int _sec = 0;
 
   String? currentTime() {
-    String getNumber(int numb) => numb < 10 ? '0$numb' : '$numb';
-
     if (!isLastIndex && !isWorkNow) {
-      return '${getNumber(_sec ~/ 60)}:${getNumber(_sec % 60)}';
+      return parseSeconds(_sec);
     }
 
     return null;

@@ -11,7 +11,7 @@ class PullUpsPage extends StatelessWidget {
       body: Center(
         child: Text(
           'PullUps',
-          style: TextStyle(color: AppColors.yellow),
+          style: TextStyle(color: AppConst.yellow),
         ),
       ),
     );

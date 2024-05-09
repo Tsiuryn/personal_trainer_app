@@ -11,7 +11,7 @@ class AbTrainPage extends StatelessWidget {
       body: Center(
         child: Text(
           'AbTrainPage',
-          style: TextStyle(color: AppColors.yellow),
+          style: TextStyle(color: AppConst.yellow),
         ),
       ),
     );

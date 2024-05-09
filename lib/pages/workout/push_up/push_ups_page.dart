@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_trainer_app/app/app_colors.dart';
 import 'package:personal_trainer_app/common/util/extensions.dart';
 import 'package:personal_trainer_app/data/gateway/push_up_gateway_impl.dart';
 import 'package:personal_trainer_app/di/get_it.dart';
@@ -20,7 +21,18 @@ class PushUpsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: AppConst.background,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: context.pop,
+          icon: Icon(
+            Icons.arrow_back,
+            color: AppConst.white,
+          ),
+        ),
+      ),
       body: BlocProvider<PushUpsBloc>(
         create: (_)
             => PushUpsBloc(gateway: getIt.get<PushUpGateway>()),

@@ -11,7 +11,7 @@ class StatisticPage extends StatelessWidget {
       body: Center(
         child: Text(
           'Statistic',
-          style: TextStyle(color: AppColors.yellow),
+          style: TextStyle(color: AppConst.yellow),
         ),
       ),
     );

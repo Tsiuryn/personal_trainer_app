@@ -23,19 +23,19 @@ class PushUpDetailsBloc extends Cubit<PushUpDetailsModel> {
 
   void finishTraining(int indexTraining) async {
     final trainer  = await gateway.getPushUpTrainer();
-    final newTrainer = state.trainingLevel.training[indexTraining].copyWith(done: true);
-    final training = [...state.trainingLevel.training];
-    training[indexTraining] = newTrainer;
 
-    final levels = [...trainer.levels];
-    final currentLevel = levels[indexTrainingLevel];
-    final update = currentLevel.copyWith(training: training);
-    levels[indexTrainingLevel] = update;
+    // Directly update the relevant training entry, if it exists.
+    if (indexTraining < trainer.levels[indexTrainingLevel].training.length) {
+      // Update the done status of the specific training.
+      final updatedTraining = trainer.levels[indexTrainingLevel].training[indexTraining]
+          .copyWith(done: true);
 
-    final updatedTrainer = trainer.copyWith(levels: levels);
+      // Update the list in-place, as Dart lists are mutable.
+      trainer.levels[indexTrainingLevel].training[indexTraining] = updatedTraining;
 
-    gateway.setPushUpTrainer(updatedTrainer);
-
+      // Update the trainer data in the gateway.
+      await gateway.setPushUpTrainer(trainer);
+    }
   }
 
   void _listener(){

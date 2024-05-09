@@ -61,7 +61,7 @@ class _WorkoutItem extends StatelessWidget {
         bottom: 32,
       ),
       decoration: BoxDecoration(
-          color: AppColors.white, borderRadius: BorderRadius.circular(16)),
+          color: AppConst.white, borderRadius: BorderRadius.circular(16)),
       child: Material(
         borderRadius: BorderRadius.circular(16),
         child: InkWell(
@@ -90,7 +90,7 @@ class _WorkoutItem extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 24,
-                        color: AppColors.background,
+                        color: AppConst.background,
                       ),
                     ),
                   )
