@@ -118,7 +118,7 @@ class TrainingDetailsPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              16.h,
+                              16.w,
                               const Icon(Icons.label_important)
                             ],
                           ),

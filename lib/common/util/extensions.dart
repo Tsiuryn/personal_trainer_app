@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
 extension PaddingExtension on int {
-  Widget get h => SizedBox(
+  Widget get w => SizedBox(
         width: toDouble(),
       );
 
-  Widget get v => SizedBox(
+  Widget get h => SizedBox(
         height: toDouble(),
       );
 }

@@ -81,7 +81,7 @@ class TrainingPage extends StatelessWidget {
                           ProgressWidget(
                             training: trainingLevel.training,
                           ),
-                          16.h,
+                          16.w,
                           const Icon(
                             Icons.label_important,
                           )
