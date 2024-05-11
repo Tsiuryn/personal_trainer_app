@@ -193,7 +193,7 @@ class SettingsItem extends StatelessWidget {
               ),
               if (onTap != null)
                 Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.only(left: 8),
                   child: Icon(
                     Icons.keyboard_arrow_right_rounded,
                     color: AppTheme.white,
