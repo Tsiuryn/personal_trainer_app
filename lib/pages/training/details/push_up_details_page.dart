@@ -8,9 +8,9 @@ import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
 import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 import 'package:personal_trainer_app/domain/gateway/settings_gateway.dart';
 import 'package:personal_trainer_app/main.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/details/bloc/push_up_details_bloc.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/training/start_training_page.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/util/training_type.dart';
+import 'package:personal_trainer_app/pages/training/details/bloc/push_up_details_bloc.dart';
+import 'package:personal_trainer_app/pages/training/training/start_training_page.dart';
+import 'package:personal_trainer_app/pages/training/util/training_type.dart';
 
 class TrainingDetailsPage extends StatelessWidget {
   final int indexTrainingLevel;

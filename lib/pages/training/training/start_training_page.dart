@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
 import 'package:personal_trainer_app/main.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/util/start_training_controller.dart';
+import 'package:personal_trainer_app/pages/training/util/start_training_controller.dart';
 
 class StartTrainingPage extends StatefulWidget {
   final Training training;

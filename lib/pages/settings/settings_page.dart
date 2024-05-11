@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/common/util/seconds_converter.dart';
 import 'package:personal_trainer_app/di/di_module.dart';
 import 'package:personal_trainer_app/domain/gateway/settings_gateway.dart';
 import 'package:personal_trainer_app/main.dart';
+import 'package:personal_trainer_app/pages/check_level/check_level_page.dart';
 import 'package:personal_trainer_app/pages/settings/bloc/settings_bloc.dart';
+import 'package:personal_trainer_app/pages/training/util/training_type.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -41,7 +44,20 @@ class SettingsPage extends StatelessWidget {
                       }
                     });
                   },
-                )
+                ),
+                const SettingsTitle(title: 'Личные достижения: '),
+                ...TrainingType.values.map((e) {
+                  return  SettingsItem(value: state.maxReps[e] != null ? state.maxReps[e].toString() : '-', title: e.settingsPageStatisticsTitle, onTap: (){
+                    context.push<bool>( CheckLevelPage(trainingType: e)).then((value) {
+                      if(value != null && value){
+                        context.read<SettingsBloc>().updateReps();
+                      }
+                    });
+                  },);
+
+                }),
+
+
               ],
             ),
           );
@@ -105,6 +121,29 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
+class SettingsTitle extends StatelessWidget {
+  final String title;
+  const SettingsTitle ({super.key, required this.title,});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16, left: 16),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: AppTheme.titleSettings,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
 class SettingsItem extends StatelessWidget {
   final String title;
   final String value;
@@ -126,12 +165,15 @@ class SettingsItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                title,
-                style: AppTheme.titleItem,
+              Expanded(
+                child: Text(
+                  title,
+                  style: AppTheme.titleItem,
+                ),
               ),
-              const Spacer(),
+              SizedBox(width: 16,),
               Text(
                 value,
                 style: AppTheme.valueItem,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/generated/resources.dart';
 import 'package:personal_trainer_app/main.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/training_page.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/util/training_type.dart';
+import 'package:personal_trainer_app/pages/training/training_page.dart';
+import 'package:personal_trainer_app/pages/training/util/training_type.dart';
 
 class WorkoutPage extends StatelessWidget {
   const WorkoutPage({super.key});

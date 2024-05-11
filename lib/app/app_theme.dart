@@ -41,6 +41,18 @@ class AppTheme {
     color: white,
   );
 
+  ///  TextStyle(
+  ///    fontSize: 18,
+  ///    fontWeight: FontWeight.w600,
+  ///    color: white,
+  ///  );
+  static TextStyle titleSettings =
+  TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: white,
+  );
+
   /// TextStyle(
   ///     fontSize: 16,
   ///     fontWeight: FontWeight.w500,
@@ -61,6 +73,17 @@ class AppTheme {
     fontSize: 16,
     fontWeight: FontWeight.w400,
     color: blue,
+  );
+
+  ///  TextStyle(
+  ///     fontSize: 14,
+  ///     fontWeight: FontWeight.w400,
+  ///     color: white,
+  ///   );
+  static TextStyle subTitle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: white,
   );
 
   ///  TextStyle(

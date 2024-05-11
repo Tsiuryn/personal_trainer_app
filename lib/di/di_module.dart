@@ -5,7 +5,7 @@ import 'package:personal_trainer_app/data/gateway/push_ups_gateway_impl.dart';
 import 'package:personal_trainer_app/data/gateway/settings_gateway_impl.dart';
 import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 import 'package:personal_trainer_app/domain/gateway/settings_gateway.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/util/training_type.dart';
+import 'package:personal_trainer_app/pages/training/util/training_type.dart';
 
 final getIt = GetIt.instance;
 

@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/common/util/extensions.dart';
-import 'package:personal_trainer_app/data/gateway/push_ups_gateway_impl.dart';
 import 'package:personal_trainer_app/di/di_module.dart';
 import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
 import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 import 'package:personal_trainer_app/main.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/bloc/push_ups_bloc.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/details/push_up_details_page.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/util/training_type.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/widgets/progress_widget.dart';
+import 'package:personal_trainer_app/pages/training/bloc/push_ups_bloc.dart';
+import 'package:personal_trainer_app/pages/training/details/push_up_details_page.dart';
+import 'package:personal_trainer_app/pages/training/util/training_type.dart';
+import 'package:personal_trainer_app/pages/training/widgets/progress_widget.dart';
 
 class TrainingPage extends StatelessWidget {
   final TrainingType trainingType;
