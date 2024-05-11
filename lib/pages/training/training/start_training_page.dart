@@ -21,6 +21,12 @@ class StartTrainingPage extends StatefulWidget {
 
 class _StartTrainingPageState extends State<StartTrainingPage>
     with StartTrainingController {
+  void canPop(BuildContext context, {bool? isSuccess}) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.pop(isSuccess);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final time = currentTime();
@@ -28,19 +34,20 @@ class _StartTrainingPageState extends State<StartTrainingPage>
     final titleButton = isWorkNow ? 'Отдых' : 'Поехали';
     final bgColor = isWorkNow ? Colors.red : Colors.green;
 
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (_) {
+    return WillPopScope(
+      onWillPop: () {
         if (!isFinishState) {
           showOkDialog(context,
                   title: 'Тренировка не завершена!',
                   description: ' При выходе прогресс будет потерян!')
               .then((value) {
             if (value != null && value == true) {
-              context.pop();
+              canPop(context);
             }
           });
         }
+
+        return Future.value(true);
       },
       child: Scaffold(
         backgroundColor: AppTheme.black,
@@ -61,7 +68,7 @@ class _StartTrainingPageState extends State<StartTrainingPage>
                         description: ' При выходе прогресс будет потерян!')
                     .then((value) {
                   if (value != null && value == true) {
-                    context.pop();
+                    canPop(context);
                   }
                 });
               }
@@ -141,7 +148,7 @@ class _StartTrainingPageState extends State<StartTrainingPage>
             description: 'Данные успешно сохранены!',
             showCancel: false)
         .then((value) {
-      context.pop(true);
+      canPop(context, isSuccess: true);
     });
   }
 

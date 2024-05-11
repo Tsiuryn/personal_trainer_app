@@ -23,8 +23,8 @@ class CheckLevelPage extends StatelessWidget {
         settingsGateway: getIt.get<SettingsGateway>(),
       ),
       child: BlocConsumer<CheckLevelBloc, CheckLevelModel>(
-        listener: (context, state){
-          if(state.state == CheckLevelModelLoading.finish){
+        listener: (context, state) {
+          if (state.state == CheckLevelModelLoading.finish) {
             context.pop(true);
           }
         },
@@ -53,10 +53,13 @@ class CheckLevelPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Spacer(),
-                    Text(
-                      trainingType.checkLevelDescription,
-                      style: AppTheme.subTitle,
-                      textAlign: TextAlign.center,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        trainingType.checkLevelDescription,
+                        style: AppTheme.subTitle,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     const Spacer(),
                     _BlockCount(

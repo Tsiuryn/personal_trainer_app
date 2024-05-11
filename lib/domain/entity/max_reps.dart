@@ -14,11 +14,12 @@ class MaxReps {
     required this.level,
   });
 
-
-  const MaxReps.empty(): value = -1, level = -1;
+  const MaxReps.empty()
+      : value = -1,
+        level = -1;
 
   factory MaxReps.fromJson(Map<String, dynamic> json) =>
-          _$MaxRepsFromJson(json);
+      _$MaxRepsFromJson(json);
 
   Map<String, dynamic> toJson() => _$MaxRepsToJson(this);
 

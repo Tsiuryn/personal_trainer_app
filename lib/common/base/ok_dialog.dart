@@ -18,16 +18,16 @@ Future<bool?> showOkDialog(
           title: Text(title),
           content: description == null ? null : Text(description),
           actions: [
-            if(showCancel)
-            CupertinoDialogAction(
-              child: Text(
-                'Отмена',
-                style: TextStyle(color: AppTheme.black),
+            if (showCancel)
+              CupertinoDialogAction(
+                child: Text(
+                  'Отмена',
+                  style: TextStyle(color: AppTheme.black),
+                ),
+                onPressed: () {
+                  context.pop();
+                },
               ),
-              onPressed: () {
-                context.pop();
-              },
-            ),
             CupertinoDialogAction(
               child: Text(
                 'Ok',

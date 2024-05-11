@@ -20,30 +20,35 @@ class CheckLevelBloc extends Cubit<CheckLevelModel> {
   void _getSettingsReps() async {
     emit(state.copyWith(state: CheckLevelModelLoading.loading));
     emit(state.copyWith(
-        maxReps: await settingsGateway.getMaxReps(trainingType), state: CheckLevelModelLoading.success,));
+      maxReps: await settingsGateway.getMaxReps(trainingType),
+      state: CheckLevelModelLoading.success,
+    ));
   }
 
   void setMaxReps() async {
-    if(state.maxReps != null) {
+    if (state.maxReps != null) {
       emit(state.copyWith(state: CheckLevelModelLoading.loading));
-      await settingsGateway.setMaxReps(trainingType, state.maxReps!.copyWith(
-        level: await _getCurrentLevel(state.maxReps!.value),
-      ));
+      await settingsGateway.setMaxReps(
+          trainingType,
+          state.maxReps!.copyWith(
+            level: await _getCurrentLevel(state.maxReps!.value),
+          ));
     }
-      emit(state.copyWith(state: CheckLevelModelLoading.finish));
+    emit(state.copyWith(state: CheckLevelModelLoading.finish));
   }
 
-  Future<int> _getCurrentLevel (int maxReps) async {
-    final gateway = getIt.get<TrainingGateway>(instanceName: trainingType.value);
+  Future<int> _getCurrentLevel(int maxReps) async {
+    final gateway =
+        getIt.get<TrainingGateway>(instanceName: trainingType.value);
 
     final trainer = await gateway.getTrainer();
     var currentLevel = 0;
     for ((int, TrainingLevel) element in trainer.levels.indexed) {
       final level = element.$2;
-      if(level.minRange <= maxReps && maxReps <= level.maxRange){
+      if (level.minRange <= maxReps && maxReps <= level.maxRange) {
         currentLevel = element.$1 + 1;
       }
-      if(element.$1 == trainer.levels.length - 1 && maxReps > level.maxRange){
+      if (element.$1 == trainer.levels.length - 1 && maxReps > level.maxRange) {
         currentLevel = element.$1 + 2;
       }
     }
@@ -69,7 +74,9 @@ class CheckLevelModel {
     required this.maxReps,
     required this.state,
   });
-  CheckLevelModel.empty() : maxReps = null, state = CheckLevelModelLoading.loading ;
+  CheckLevelModel.empty()
+      : maxReps = null,
+        state = CheckLevelModelLoading.loading;
 
   CheckLevelModel copyWith({
     MaxReps? maxReps,
@@ -82,6 +89,4 @@ class CheckLevelModel {
   }
 }
 
-enum CheckLevelModelLoading{
-  loading, success, finish
-}
+enum CheckLevelModelLoading { loading, success, finish }

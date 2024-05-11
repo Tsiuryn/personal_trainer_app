@@ -28,10 +28,10 @@ class SettingsGatewayImpl implements SettingsGateway {
   }
 
   @override
-  Future<MaxReps?> getMaxReps(TrainingType trainingType) async{
+  Future<MaxReps?> getMaxReps(TrainingType trainingType) async {
     final sourceValue = (await prefs).getString(_getMaxRepsKey(trainingType));
 
-    if(sourceValue != null){
+    if (sourceValue != null) {
       return MaxReps.fromJson(jsonDecode(sourceValue));
     }
 
@@ -40,8 +40,10 @@ class SettingsGatewayImpl implements SettingsGateway {
 
   @override
   Future<bool> setMaxReps(TrainingType trainingType, MaxReps maxReps) async {
-    return (await prefs).setString(_getMaxRepsKey(trainingType), jsonEncode(maxReps.toJson()));
+    return (await prefs)
+        .setString(_getMaxRepsKey(trainingType), jsonEncode(maxReps.toJson()));
   }
-  
-  String _getMaxRepsKey (TrainingType trainingType) => '${trainingType.value}_reps';
+
+  String _getMaxRepsKey(TrainingType trainingType) =>
+      '${trainingType.value}_reps';
 }

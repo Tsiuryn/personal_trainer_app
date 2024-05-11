@@ -13,6 +13,7 @@ import 'package:personal_trainer_app/pages/training/widgets/progress_widget.dart
 
 class TrainingPage extends StatelessWidget {
   final TrainingType trainingType;
+
   const TrainingPage({
     super.key,
     required this.trainingType,
@@ -41,16 +42,16 @@ class TrainingPage extends StatelessWidget {
         create: (_) => PushUpsBloc(
             gateway:
                 getIt.get<TrainingGateway>(instanceName: trainingType.value)),
-        child:
-            BlocBuilder<PushUpsBloc, PushUpsModel>(builder: (context, state) {
-          final trainer = state.trainer;
-          if (trainer.levels.isEmpty) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+        child: BlocBuilder<PushUpsBloc, PushUpsModel>(
+          builder: (context, state) {
+            final trainer = state.trainer;
+            if (trainer.levels.isEmpty) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-          return ListView.builder(
+            return ListView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: trainer.levels.length,
               itemBuilder: (context, index) {
@@ -89,8 +90,10 @@ class TrainingPage extends StatelessWidget {
                     ),
                   ),
                 );
-              });
-        }),
+              },
+            );
+          },
+        ),
       ),
     );
   }

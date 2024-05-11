@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/common/base/ok_dialog.dart';
+import 'package:personal_trainer_app/common/util/extensions.dart';
 import 'package:personal_trainer_app/common/util/seconds_converter.dart';
 import 'package:personal_trainer_app/di/di_module.dart';
 import 'package:personal_trainer_app/domain/entity/max_reps.dart';
@@ -92,6 +93,7 @@ class SettingsPage extends StatelessWidget {
                       },
                     );
                   }),
+                  32.h,
                 ],
               ),
             ),

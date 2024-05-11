@@ -19,7 +19,10 @@ class SquatsGatewayImpl implements TrainingGateway {
 
   @override
   Future<Trainer> getTrainer() async {
-    const tc = TrainingCalculator(trainingInLevels: 4, numberOfLevels: 25,);
+    const tc = TrainingCalculator(
+      trainingInLevels: 4,
+      numberOfLevels: 25,
+    );
     try {
       final pf = await prefs;
 

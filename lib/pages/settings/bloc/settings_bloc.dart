@@ -34,7 +34,7 @@ class SettingsBloc extends Cubit<SettingsModel> {
     var values = <TrainingType, MaxReps>{};
     for (var element in TrainingType.values) {
       final maxReps = await gateway.getMaxReps(element);
-      if(maxReps != null){
+      if (maxReps != null) {
         values[element] = maxReps;
       }
     }
@@ -42,7 +42,7 @@ class SettingsBloc extends Cubit<SettingsModel> {
     return values;
   }
 
-  void clearHistory (TrainingType trainingType) async{
+  void clearHistory(TrainingType trainingType) async {
     final gateWay = trainingType.getTrainingGateway();
 
     await gateWay.clearHistory();
@@ -71,5 +71,4 @@ class SettingsModel {
       maxReps: maxReps ?? this.maxReps,
     );
   }
-
 }

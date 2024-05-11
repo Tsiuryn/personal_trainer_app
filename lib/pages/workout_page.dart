@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
+import 'package:personal_trainer_app/common/util/extensions.dart';
 import 'package:personal_trainer_app/generated/resources.dart';
 import 'package:personal_trainer_app/main.dart';
 import 'package:personal_trainer_app/pages/training/training_page.dart';
@@ -51,9 +52,7 @@ class WorkoutPage extends StatelessWidget {
                           trainingType: TrainingType.squats,
                         ));
                       }),
-                  const SizedBox(
-                    height: 32,
-                  )
+                  32.h,
                 ],
               ),
             ),
