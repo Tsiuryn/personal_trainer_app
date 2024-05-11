@@ -1,8 +1,8 @@
-import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
+import 'package:personal_trainer_app/domain/entity/trainer.dart';
 
 abstract interface class TrainingGateway {
   Stream<Trainer> trainerStream();
-  Future<Trainer> getPushUpTrainer();
-  Future<void> setPushUpTrainer(Trainer pushUpTrainer);
-  Future<bool> clearStatistics();
+  Future<Trainer> getTrainer();
+  Future<void> setTrainer(Trainer pushUpTrainer);
+  Future<bool> clearHistory();
 }

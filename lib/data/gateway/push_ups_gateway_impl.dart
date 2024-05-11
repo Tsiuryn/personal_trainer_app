@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:personal_trainer_app/common/util/training_calculator.dart';
-import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
+import 'package:personal_trainer_app/domain/entity/trainer.dart';
 import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +18,7 @@ class PushUpsGatewayImpl implements TrainingGateway {
   final PublishSubject<Trainer> _subject = PublishSubject();
 
   @override
-  Future<Trainer> getPushUpTrainer() async {
+  Future<Trainer> getTrainer() async {
     const tc = TrainingCalculator(trainingInLevels: 3);
     try {
       final pf = await prefs;
@@ -48,7 +48,7 @@ class PushUpsGatewayImpl implements TrainingGateway {
   }
 
   @override
-  Future<void> setPushUpTrainer(Trainer pushUpTrainer) async {
+  Future<void> setTrainer(Trainer pushUpTrainer) async {
     _subject.add(pushUpTrainer);
     final json = pushUpTrainer.toJson();
     final pf = await prefs;
@@ -62,7 +62,7 @@ class PushUpsGatewayImpl implements TrainingGateway {
   }
 
   @override
-  Future<bool> clearStatistics() async {
+  Future<bool> clearHistory() async {
     return (await prefs).remove(_prefKey);
   }
 }

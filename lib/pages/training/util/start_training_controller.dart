@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:personal_trainer_app/common/util/seconds_converter.dart';
-import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
+import 'package:personal_trainer_app/domain/entity/trainer.dart';
 
 mixin StartTrainingController<T extends StatefulWidget> on State<T> {
   @override

@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
+import 'package:personal_trainer_app/common/base/ok_dialog.dart';
 import 'package:personal_trainer_app/common/util/seconds_converter.dart';
 import 'package:personal_trainer_app/di/di_module.dart';
+import 'package:personal_trainer_app/domain/entity/max_reps.dart';
 import 'package:personal_trainer_app/domain/gateway/settings_gateway.dart';
 import 'package:personal_trainer_app/main.dart';
 import 'package:personal_trainer_app/pages/check_level/check_level_page.dart';
@@ -31,41 +33,67 @@ class SettingsPage extends StatelessWidget {
               backgroundColor: Colors.transparent,
               automaticallyImplyLeading: false,
             ),
-            body: Column(
-              children: [
-                SettingsItem(
-                  title: 'Время отдыха',
-                  value: parseSeconds(state.restDuration.inSeconds),
-                  onTap: () {
-                    _showNumberPicker(context, state.restDuration.inSeconds)
-                        .then((value) {
-                      if (value != null) {
-                        context
-                            .read<SettingsBloc>()
-                            .setRestTime(Duration(seconds: value));
-                      }
-                    });
-                  },
-                ),
-                const SettingsTitle(title: 'Личные достижения: '),
-                ...TrainingType.values.map((e) {
-                  return SettingsItem(
-                    value: state.maxReps[e] != null
-                        ? state.maxReps[e].toString()
-                        : '-',
-                    title: e.settingsPageStatisticsTitle,
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SettingsItem(
+                    title: 'Время отдыха',
+                    value: parseSeconds(state.restDuration.inSeconds),
                     onTap: () {
-                      context
-                          .push<bool>(CheckLevelPage(trainingType: e))
+                      _showNumberPicker(context, state.restDuration.inSeconds)
                           .then((value) {
-                        if (value != null && value) {
-                          context.read<SettingsBloc>().updateReps();
+                        if (value != null) {
+                          context
+                              .read<SettingsBloc>()
+                              .setRestTime(Duration(seconds: value));
                         }
                       });
                     },
-                  );
-                }),
-              ],
+                  ),
+                  const SettingsTitle(title: 'Личные достижения: '),
+                  ...TrainingType.values.map(
+                    (e) {
+                      final MaxReps? maxReps = state.maxReps[e];
+                      return SettingsItem(
+                        value: maxReps != null ? maxReps.value.toString() : '-',
+                        title: e.settingsPageStatisticsTitle,
+                        description: maxReps != null
+                            ? 'Ваш текущий уровень: ${maxReps.level}'
+                            : null,
+                        onTap: () {
+                          context
+                              .push<bool>(CheckLevelPage(trainingType: e))
+                              .then((value) {
+                            if (value != null && value) {
+                              context.read<SettingsBloc>().updateReps();
+                            }
+                          });
+                        },
+                      );
+                    },
+                  ),
+                  const SettingsTitle(title: 'Очистить данные: '),
+                  ...TrainingType.values.map((type) {
+                    return SettingsItem(
+                      title: type.settingsPageClearDataTitle,
+                      onTap: () {
+                        showOkDialog(context,
+                                title: 'Удаление данных',
+                                description:
+                                    '${type.settingsPageClearDataTitle}?')
+                            .then((value) {
+                          if (value != null && value) {
+                            context.read<SettingsBloc>().clearHistory(type);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Данные успешно удалены!')));
+                          }
+                        });
+                      },
+                    );
+                  }),
+                ],
+              ),
             ),
           );
         },
@@ -157,13 +185,15 @@ class SettingsTitle extends StatelessWidget {
 
 class SettingsItem extends StatelessWidget {
   final String title;
-  final String value;
+  final String? value;
+  final String? description;
   final VoidCallback? onTap;
 
   const SettingsItem({
     super.key,
-    required this.value,
     required this.title,
+    this.value,
+    this.description,
     this.onTap,
   });
 
@@ -179,18 +209,32 @@ class SettingsItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Text(
-                  title,
-                  style: AppTheme.titleItem,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: AppTheme.titleItem,
+                    ),
+                    if (description != null)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Text(
+                          description!,
+                          style: AppTheme.smallDescription,
+                        ),
+                      )
+                  ],
                 ),
               ),
               const SizedBox(
                 width: 16,
               ),
-              Text(
-                value,
-                style: AppTheme.valueItem,
-              ),
+              if (value != null)
+                Text(
+                  value!,
+                  style: AppTheme.valueItem,
+                ),
               if (onTap != null)
                 Padding(
                   padding: const EdgeInsets.only(left: 8),

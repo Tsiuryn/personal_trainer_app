@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static Color background = Colors.black;
+  static Color black = Colors.black;
   static Color blue = Colors.blue[700]!;
   static Color yellow = Colors.yellow;
   static Color white = Colors.white;
   static Color navBar = Colors.white60;
   static Color grey = Colors.grey;
+  static Color red = Colors.red;
 
   /// TextStyle(
   ///     fontSize: 24,
@@ -92,6 +93,17 @@ class AppTheme {
   ///   );
   static TextStyle description = TextStyle(
     fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: white,
+  );
+
+  ///  TextStyle(
+  ///     fontSize: 10,
+  ///     fontWeight: FontWeight.w400,
+  ///     color: white,
+  ///   );
+  static TextStyle smallDescription = TextStyle(
+    fontSize: 10,
     fontWeight: FontWeight.w400,
     color: white,
   );

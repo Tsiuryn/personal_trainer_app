@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
+import 'package:personal_trainer_app/domain/entity/trainer.dart';
 import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 import 'package:personal_trainer_app/domain/gateway/settings_gateway.dart';
 
@@ -18,7 +18,7 @@ class PushUpDetailsBloc extends Cubit<PushUpDetailsModel> {
   }
 
   void _getPushUpTrainer() async {
-    final trainer = await gateway.getPushUpTrainer();
+    final trainer = await gateway.getTrainer();
     final restTime = await settingsGateway.getRestTime();
 
     emit(state.copyWith(
@@ -28,7 +28,7 @@ class PushUpDetailsBloc extends Cubit<PushUpDetailsModel> {
   }
 
   void finishTraining(int indexTraining) async {
-    final trainer = await gateway.getPushUpTrainer();
+    final trainer = await gateway.getTrainer();
 
     // Directly update the relevant training entry, if it exists.
     if (indexTraining < trainer.levels[indexTrainingLevel].training.length) {
@@ -43,7 +43,7 @@ class PushUpDetailsBloc extends Cubit<PushUpDetailsModel> {
           updatedTraining;
 
       // Update the trainer data in the gateway.
-      await gateway.setPushUpTrainer(trainer);
+      await gateway.setTrainer(trainer);
     }
   }
 

@@ -43,6 +43,14 @@ class WorkoutPage extends StatelessWidget {
                           trainingType: TrainingType.pullUps,
                         ));
                       }),
+                  _WorkoutItem(
+                      imagePath: AppRes.squats,
+                      title: 'Приседания',
+                      onTap: () {
+                        context.push(TrainingPage(
+                          trainingType: TrainingType.squats,
+                        ));
+                      }),
                   const SizedBox(
                     height: 32,
                   )
@@ -101,7 +109,7 @@ class _WorkoutItem extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 24,
-                        color: AppTheme.background,
+                        color: AppTheme.black,
                       ),
                     ),
                   )

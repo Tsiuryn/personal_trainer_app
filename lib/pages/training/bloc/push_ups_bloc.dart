@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
+import 'package:personal_trainer_app/domain/entity/trainer.dart';
 import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 
 class PushUpsBloc extends Cubit<PushUpsModel> {
@@ -13,7 +13,7 @@ class PushUpsBloc extends Cubit<PushUpsModel> {
   }
 
   void getPushUpTrainer() async {
-    final trainer = await gateway.getPushUpTrainer();
+    final trainer = await gateway.getTrainer();
     emit(state.copyWith(trainer: trainer));
   }
 

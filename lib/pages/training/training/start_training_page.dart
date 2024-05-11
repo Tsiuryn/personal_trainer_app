@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
-import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
+import 'package:personal_trainer_app/common/base/ok_dialog.dart';
+import 'package:personal_trainer_app/domain/entity/trainer.dart';
 import 'package:personal_trainer_app/main.dart';
 import 'package:personal_trainer_app/pages/training/util/start_training_controller.dart';
 
@@ -20,54 +21,6 @@ class StartTrainingPage extends StatefulWidget {
 
 class _StartTrainingPageState extends State<StartTrainingPage>
     with StartTrainingController {
-  Future<T?> _showDialog<T>({
-    bool isPop = false,
-  }) async {
-    final title = isPop
-        ? 'Тренировка не завершена. При выходе прогресс будет потерян!'
-        : 'Тренировка успешно завершена!';
-    const style = TextStyle(fontSize: 24, fontWeight: FontWeight.w500);
-
-    return showDialog<T>(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) {
-          return AlertDialog(
-            title: Text(title),
-            actions: [
-              if (isPop)
-                TextButton(
-                  onPressed: () {
-                    context.pop();
-                  },
-                  child: Text(
-                    'Отмена',
-                    style: style.copyWith(color: Colors.green),
-                  ),
-                ),
-              if (isPop)
-                TextButton(
-                    onPressed: () {
-                      context.pop(true);
-                    },
-                    child: const Text(
-                      'Выйти',
-                      style: style,
-                    )),
-              if (!isPop)
-                TextButton(
-                    onPressed: () {
-                      context.pop(true);
-                    },
-                    child: const Text(
-                      'Ok',
-                      style: style,
-                    ))
-            ],
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     final time = currentTime();
@@ -76,11 +29,13 @@ class _StartTrainingPageState extends State<StartTrainingPage>
     final bgColor = isWorkNow ? Colors.red : Colors.green;
 
     return PopScope(
+      canPop: false,
       onPopInvoked: (_) {
         if (!isFinishState) {
-          _showDialog(
-            isPop: true,
-          ).then((value) {
+          showOkDialog(context,
+                  title: 'Тренировка не завершена!',
+                  description: ' При выходе прогресс будет потерян!')
+              .then((value) {
             if (value != null && value == true) {
               context.pop();
             }
@@ -88,7 +43,7 @@ class _StartTrainingPageState extends State<StartTrainingPage>
         }
       },
       child: Scaffold(
-        backgroundColor: AppTheme.background,
+        backgroundColor: AppTheme.black,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
@@ -101,9 +56,10 @@ class _StartTrainingPageState extends State<StartTrainingPage>
               if (isFinishState) {
                 context.pop(true);
               } else {
-                _showDialog(
-                  isPop: true,
-                ).then((value) {
+                showOkDialog(context,
+                        title: 'Тренировка не завершена!',
+                        description: ' При выходе прогресс будет потерян!')
+                    .then((value) {
                   if (value != null && value == true) {
                     context.pop();
                   }
@@ -180,7 +136,11 @@ class _StartTrainingPageState extends State<StartTrainingPage>
 
   @override
   void onSuccess() {
-    _showDialog().then((value) {
+    showOkDialog(context,
+            title: 'Тренировка завершена',
+            description: 'Данные успешно сохранены!',
+            showCancel: false)
+        .then((value) {
       context.pop(true);
     });
   }

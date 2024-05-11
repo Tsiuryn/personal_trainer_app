@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/common/base/loading_page.dart';
 import 'package:personal_trainer_app/common/util/extensions.dart';
 import 'package:personal_trainer_app/di/di_module.dart';
-import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
+import 'package:personal_trainer_app/domain/entity/trainer.dart';
 import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 import 'package:personal_trainer_app/domain/gateway/settings_gateway.dart';
 import 'package:personal_trainer_app/main.dart';
@@ -40,7 +41,7 @@ class TrainingDetailsPage extends StatelessWidget {
         }
 
         return Scaffold(
-          backgroundColor: AppTheme.background,
+          backgroundColor: AppTheme.black,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             leading: IconButton(
@@ -97,13 +98,27 @@ class TrainingDetailsPage extends StatelessWidget {
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(
-                                training.successDate != null
-                                    ? Icons.workspace_premium_outlined
-                                    : Icons.unpublished_outlined,
-                                color: training.successDate != null
-                                    ? Colors.green
-                                    : Colors.grey,
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    training.successDate != null
+                                        ? Icons.workspace_premium_outlined
+                                        : Icons.unpublished_outlined,
+                                    color: training.successDate != null
+                                        ? Colors.green
+                                        : Colors.grey,
+                                  ),
+                                  if (training.successDate != null)
+                                    Text(
+                                      DateFormat.yMEd('ru')
+                                          .format(training.successDate!),
+                                      style: AppTheme.description.copyWith(
+                                        color: AppTheme.black,
+                                      ),
+                                    )
+                                ],
                               ),
                               16.h,
                               const Icon(Icons.label_important)

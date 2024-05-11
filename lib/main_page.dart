@@ -20,7 +20,7 @@ class _MyHomePageState extends State<MainPage> {
 
   final _pages = const [
     WorkoutPage(),
-    StatisticPage(),
+    // StatisticPage(),
     SettingsPage(),
   ];
 
@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.background,
+      backgroundColor: AppTheme.black,
       body: Stack(
         children: [
           Positioned.fill(
@@ -67,9 +67,9 @@ class _MyHomePageState extends State<MainPage> {
                     CustomNavigationBarItem(
                       icon: const Icon(Icons.sports_baseball_rounded),
                     ),
-                    CustomNavigationBarItem(
-                      icon: const Icon(Icons.auto_graph_rounded),
-                    ),
+                    // CustomNavigationBarItem(
+                    //   icon: const Icon(Icons.auto_graph_rounded),
+                    // ),
                     CustomNavigationBarItem(
                       icon: const Icon(Icons.settings),
                     )

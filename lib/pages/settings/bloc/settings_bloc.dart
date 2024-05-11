@@ -1,5 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_trainer_app/di/di_module.dart';
+import 'package:personal_trainer_app/domain/entity/max_reps.dart';
 import 'package:personal_trainer_app/domain/gateway/settings_gateway.dart';
+import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 import 'package:personal_trainer_app/pages/training/util/training_type.dart';
 
 class SettingsBloc extends Cubit<SettingsModel> {
@@ -27,20 +30,28 @@ class SettingsBloc extends Cubit<SettingsModel> {
     emit(state.copyWith(maxReps: await _getReps()));
   }
 
-  Future<Map<TrainingType, int>> _getReps() async {
-    var values = <TrainingType, int>{};
+  Future<Map<TrainingType, MaxReps>> _getReps() async {
+    var values = <TrainingType, MaxReps>{};
     for (var element in TrainingType.values) {
-      final count = await gateway.getMaxReps(element);
-      values[element] = count;
+      final maxReps = await gateway.getMaxReps(element);
+      if(maxReps != null){
+        values[element] = maxReps;
+      }
     }
 
     return values;
+  }
+
+  void clearHistory (TrainingType trainingType) async{
+    final gateWay = trainingType.getTrainingGateway();
+
+    await gateWay.clearHistory();
   }
 }
 
 class SettingsModel {
   final Duration restDuration;
-  final Map<TrainingType, int> maxReps;
+  final Map<TrainingType, MaxReps> maxReps;
 
   const SettingsModel({
     required this.restDuration,
@@ -53,11 +64,12 @@ class SettingsModel {
 
   SettingsModel copyWith({
     Duration? restDuration,
-    Map<TrainingType, int>? maxReps,
+    Map<TrainingType, MaxReps>? maxReps,
   }) {
     return SettingsModel(
       restDuration: restDuration ?? this.restDuration,
       maxReps: maxReps ?? this.maxReps,
     );
   }
+
 }

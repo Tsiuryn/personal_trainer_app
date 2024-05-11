@@ -7,23 +7,19 @@ import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const _prefKey = 'bodyLiftTrainer';
+const _prefKey = 'squatsTrainer';
 
-class BodyLiftGatewayImpl implements TrainingGateway {
+class SquatsGatewayImpl implements TrainingGateway {
   Future<SharedPreferences> get prefs async =>
       await SharedPreferences.getInstance();
 
-  BodyLiftGatewayImpl();
+  SquatsGatewayImpl();
 
   final PublishSubject<Trainer> _subject = PublishSubject();
 
   @override
   Future<Trainer> getTrainer() async {
-    const tc = TrainingCalculator(
-      initialReps: 10,
-      numberOfLevels: 11,
-      trainingInLevels: 5,
-    );
+    const tc = TrainingCalculator(trainingInLevels: 4, numberOfLevels: 25,);
     try {
       final pf = await prefs;
 
@@ -39,15 +35,6 @@ class BodyLiftGatewayImpl implements TrainingGateway {
     } catch (e) {
       log(e.toString());
       return tc.workoutList();
-    }
-  }
-
-  double getCoefficient(int level) {
-    switch (level) {
-      case < 21:
-        return 0.75;
-      default:
-        return 1;
     }
   }
 

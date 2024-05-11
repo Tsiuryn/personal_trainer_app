@@ -1,4 +1,4 @@
-import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
+import 'package:personal_trainer_app/domain/entity/trainer.dart';
 
 class TrainingCalculator {
   /// Начальное количество повторений

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:personal_trainer_app/di/di_module.dart';
 import 'package:personal_trainer_app/main_page.dart';
 
@@ -16,6 +17,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      locale: const Locale('ru'),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
         useMaterial3: true,
@@ -29,5 +36,5 @@ extension BuildContextExtension on BuildContext {
   Future<T?> push<T>(Widget widget) =>
       Navigator.of(this).push<T>(MaterialPageRoute(builder: (_) => widget));
 
-  void pop<T>([T? result]) => Navigator.of(this).pop(result);
+  void pop<T>([T? result]) => Navigator.of(this).pop<T>(result);
 }

@@ -7,6 +7,13 @@ class AppRes {
   static const String mainImage = 'assets/images/main_image.jpg';
   static const String pullUp = 'assets/images/pull_up.jpg';
   static const String pushUp = 'assets/images/push_up.jpeg';
+  static const String squats = 'assets/images/squats.jpeg';
 
-  static const List<String> values = [abTrain, mainImage, pullUp, pushUp];
+  static const List<String> values = [
+    abTrain,
+    mainImage,
+    pullUp,
+    pushUp,
+    squats
+  ];
 }
