@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:personal_trainer_app/domain/entity/push_up/push_up_trainer.dart';
+import 'package:personal_trainer_app/app/app_theme.dart';
+import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
 import 'package:personal_trainer_app/main.dart';
 import 'package:personal_trainer_app/pages/workout/push_up/util/start_training_controller.dart';
 
 class StartTrainingPage extends StatefulWidget {
   final Training training;
+  final Duration restTime;
 
   const StartTrainingPage({
     super.key,
     required this.training,
+    required this.restTime,
   });
 
   @override
@@ -86,10 +89,12 @@ class _StartTrainingPageState extends State<StartTrainingPage> with StartTrainin
         }
       },
       child: Scaffold(
+        backgroundColor: AppTheme.background,
         appBar: AppBar(
           automaticallyImplyLeading: false,
+          backgroundColor: Colors.transparent,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
+            icon: Icon(Icons.arrow_back, color: AppTheme.white,),
             onPressed: () {
               if (isFinishState) {
                 context.pop(true);
@@ -131,8 +136,7 @@ class _StartTrainingPageState extends State<StartTrainingPage> with StartTrainin
                       children: [
                         Text(
                           time ?? '',
-                          style: const TextStyle(
-                              fontSize: 44, fontWeight: FontWeight.w500),
+                          style: AppTheme.trainingTimer,
                         ),
                         SizedBox(
                           height: 90,
@@ -156,7 +160,7 @@ class _StartTrainingPageState extends State<StartTrainingPage> with StartTrainin
                             isFinishState ? .2 : 1,
                         child: OutlinedButton(
                           onPressed: onTapAction,
-                          child: Text(titleButton),
+                          child: Text(titleButton, style: AppTheme.trainingButtonTextStyle,),
                         ),
                       ),
                     ),
@@ -179,6 +183,9 @@ class _StartTrainingPageState extends State<StartTrainingPage> with StartTrainin
 
   @override
   Training get training => widget.training;
+
+  @override
+  Duration get restDuration => widget.restTime;
 }
 
 class ListSteps extends StatelessWidget {

@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:personal_trainer_app/common/util/seconds_converter.dart';
-import 'package:personal_trainer_app/domain/entity/push_up/push_up_trainer.dart';
-
-const defaultSec = 90;
+import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
 
 mixin StartTrainingController<T extends StatefulWidget> on State<T> {
   @override
@@ -12,6 +10,8 @@ mixin StartTrainingController<T extends StatefulWidget> on State<T> {
     _timer?.cancel();
     super.dispose();
   }
+
+  Duration get restDuration;
 
   Training get training;
 
@@ -24,7 +24,10 @@ mixin StartTrainingController<T extends StatefulWidget> on State<T> {
   bool get isLastIndex => _currentIndex == training.pushUpsCount.length - 1;
 
   Timer? _timer;
-  int _sec = 0;
+
+  DateTime _finishTime = DateTime.now();
+
+  int get _sec => _finishTime.difference(DateTime.now()).inSeconds.abs();
 
   String? currentTime() {
     if (!isLastIndex && !isWorkNow) {
@@ -37,7 +40,7 @@ mixin StartTrainingController<T extends StatefulWidget> on State<T> {
   double getPercentTime(){
     if(isWorkNow) return 0;
 
-    return _sec / defaultSec;
+    return _sec / restDuration.inSeconds;
   }
 
   TrainingState _currentState = TrainingState.work;
@@ -78,11 +81,10 @@ mixin StartTrainingController<T extends StatefulWidget> on State<T> {
     if (isLastIndex && !isWorkNow) return;
 
     if (!isWorkNow) {
-      _sec = defaultSec;
+      _finishTime = DateTime.now().add(restDuration);
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         setState(() {
-          _sec--;
-          if (_sec == 0) {
+          if (_finishTime.isBefore(DateTime.now())) {
             _timer?.cancel();
             onTapAction();
           }

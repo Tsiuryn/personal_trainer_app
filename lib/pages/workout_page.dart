@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:personal_trainer_app/app/app_colors.dart';
+import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/generated/resources.dart';
 import 'package:personal_trainer_app/main.dart';
-import 'package:personal_trainer_app/pages/workout/push_up/push_ups_page.dart';
+import 'package:personal_trainer_app/pages/workout/push_up/training_page.dart';
+import 'package:personal_trainer_app/pages/workout/push_up/util/training_type.dart';
 
 class WorkoutPage extends StatelessWidget {
   const WorkoutPage({super.key});
@@ -21,17 +22,21 @@ class WorkoutPage extends StatelessWidget {
                       imagePath: AppRes.pushUp,
                       title: 'Отжимания',
                       onTap: () {
-                        context.push(PushUpsPage());
+                        context.push(TrainingPage(trainingType: TrainingType.pushUps,));
                       }),
                   _WorkoutItem(
                     imagePath: AppRes.abTrain,
                     title: 'Пресс',
-                    onTap: () {},
+                    onTap: () {
+                      context.push(TrainingPage(trainingType: TrainingType.bodyLifts,));
+                    },
                   ),
                   _WorkoutItem(
                       imagePath: AppRes.pullUp,
                       title: 'Подтягивания',
-                      onTap: () {}),
+                      onTap: () {
+                        context.push(TrainingPage(trainingType: TrainingType.pullUps,));
+                      }),
                   const SizedBox(
                     height: 32,
                   )
@@ -61,7 +66,7 @@ class _WorkoutItem extends StatelessWidget {
         bottom: 32,
       ),
       decoration: BoxDecoration(
-          color: AppConst.white, borderRadius: BorderRadius.circular(16)),
+          color: AppTheme.white, borderRadius: BorderRadius.circular(16)),
       child: Material(
         borderRadius: BorderRadius.circular(16),
         child: InkWell(
@@ -90,7 +95,7 @@ class _WorkoutItem extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 24,
-                        color: AppConst.background,
+                        color: AppTheme.background,
                       ),
                     ),
                   )

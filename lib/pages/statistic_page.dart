@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_trainer_app/app/app_colors.dart';
+import 'package:personal_trainer_app/app/app_theme.dart';
 
 class StatisticPage extends StatelessWidget {
   const StatisticPage({super.key});
@@ -11,7 +11,7 @@ class StatisticPage extends StatelessWidget {
       body: Center(
         child: Text(
           'Statistic',
-          style: TextStyle(color: AppConst.yellow),
+          style: TextStyle(color: AppTheme.yellow),
         ),
       ),
     );

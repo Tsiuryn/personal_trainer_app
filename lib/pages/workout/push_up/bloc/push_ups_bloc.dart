@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:personal_trainer_app/domain/entity/push_up/push_up_trainer.dart';
-import 'package:personal_trainer_app/domain/gateway/push_up_gateway.dart';
+import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
+import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 
 class PushUpsBloc extends Cubit <PushUpsModel>{
-  final PushUpGateway gateway;
+  final TrainingGateway gateway;
 
   PushUpsBloc({required this.gateway,})
       : super(PushUpsModel.empty()){
@@ -24,14 +24,14 @@ class PushUpsBloc extends Cubit <PushUpsModel>{
 }
 
 class PushUpsModel {
-  final PushUpTrainer trainer;
+  final Trainer trainer;
 
   PushUpsModel({required this.trainer});
 
-  PushUpsModel.empty(): trainer = PushUpTrainer.empty();
+  PushUpsModel.empty(): trainer = Trainer.empty();
 
   PushUpsModel copyWith({
-    PushUpTrainer? trainer,
+    Trainer? trainer,
   }) {
     return PushUpsModel(
       trainer: trainer ?? this.trainer,

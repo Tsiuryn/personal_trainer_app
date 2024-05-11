@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_trainer_app/app/app_colors.dart';
+import 'package:personal_trainer_app/app/app_theme.dart';
 
 class AbTrainPage extends StatelessWidget {
   const AbTrainPage({super.key});
@@ -11,7 +11,7 @@ class AbTrainPage extends StatelessWidget {
       body: Center(
         child: Text(
           'AbTrainPage',
-          style: TextStyle(color: AppConst.yellow),
+          style: TextStyle(color: AppTheme.yellow),
         ),
       ),
     );

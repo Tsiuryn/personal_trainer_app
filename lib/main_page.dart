@@ -1,6 +1,6 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_trainer_app/app/app_colors.dart';
+import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/pages/statistic_page.dart';
 import 'package:personal_trainer_app/pages/settings/settings_page.dart';
 import 'package:personal_trainer_app/pages/workout_page.dart';
@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppConst.background,
+      backgroundColor: AppTheme.background,
       body: Stack(
         children: [
           Positioned.fill(
@@ -58,9 +58,9 @@ class _MyHomePageState extends State<MainPage> {
                 child: CustomNavigationBar(
                   isFloating: true,
                   borderRadius: const Radius.circular(42),
-                  backgroundColor: AppConst.navBar,
-                  unSelectedColor: AppConst.yellow,
-                  selectedColor: AppConst.blue,
+                  backgroundColor: AppTheme.navBar,
+                  unSelectedColor: AppTheme.yellow,
+                  selectedColor: AppTheme.blue,
                   elevation: 5,
                   currentIndex: _currentIndex,
                   items: [

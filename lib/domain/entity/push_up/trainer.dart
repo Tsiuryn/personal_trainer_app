@@ -1,27 +1,27 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'push_up_trainer.g.dart';
+part 'trainer.g.dart';
 
 @JsonSerializable()
-class PushUpTrainer {
+class Trainer {
   @JsonValue('levels')
   final List<TrainingLevel> levels;
 
-  const PushUpTrainer({
+  const Trainer({
     required this.levels,
   });
 
-  factory PushUpTrainer.fromJson(Map<String, dynamic> json) =>
-      _$PushUpTrainerFromJson(json);
+  factory Trainer.fromJson(Map<String, dynamic> json) =>
+      _$TrainerFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PushUpTrainerToJson(this);
+  Map<String, dynamic> toJson() => _$TrainerToJson(this);
 
-  PushUpTrainer.empty(): levels = [];
+  Trainer.empty(): levels = [];
 
-  PushUpTrainer copyWith({
+  Trainer copyWith({
     List<TrainingLevel>? levels,
   }) {
-    return PushUpTrainer(
+    return Trainer(
       levels: levels ?? this.levels,
     );
   }
@@ -71,12 +71,12 @@ class TrainingLevel {
 class Training {
   @JsonValue('pushUpsCount')
   final List<int> pushUpsCount;
-  @JsonValue('done')
-  final bool done;
+  @JsonValue('successDate')
+  final DateTime? successDate;
 
   const Training({
     required this.pushUpsCount,
-    required this.done,
+    this.successDate,
   });
 
   factory Training.fromJson(Map<String, dynamic> json) =>
@@ -84,15 +84,15 @@ class Training {
 
   Map<String, dynamic> toJson() => _$TrainingToJson(this);
 
-  Training.empty(): pushUpsCount = [], done = false;
+  Training.empty(): pushUpsCount = [], successDate = null;
 
   Training copyWith({
     List<int>? pushUpsCount,
-    bool? done,
+    DateTime? successDate,
   }) {
     return Training(
       pushUpsCount: pushUpsCount ?? this.pushUpsCount,
-      done: done ?? this.done,
+      successDate: successDate ?? this.successDate,
     );
   }
 }

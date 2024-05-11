@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:personal_trainer_app/app/app_colors.dart';
+import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/common/util/seconds_converter.dart';
-import 'package:personal_trainer_app/di/get_it.dart';
+import 'package:personal_trainer_app/di/di_module.dart';
 import 'package:personal_trainer_app/domain/gateway/settings_gateway.dart';
 import 'package:personal_trainer_app/main.dart';
 import 'package:personal_trainer_app/pages/settings/bloc/settings_bloc.dart';
@@ -24,7 +24,7 @@ class SettingsPage extends StatelessWidget {
             appBar: AppBar(
               title: Text(
                 'Настройки',
-                style: AppConst.appBarTitle,
+                style: AppTheme.appBarTitle,
               ),
               backgroundColor: Colors.transparent,
               automaticallyImplyLeading: false,
@@ -52,7 +52,7 @@ class SettingsPage extends StatelessWidget {
 
   Future<int?> _showNumberPicker(BuildContext context, int currentDurationInSec) {
     const kStartKoef = 30;
-    final listNumbers = List.generate(151, (index) => index + kStartKoef);
+    final listNumbers = List.generate(31, (index) => (index * 5) + kStartKoef);
     return showCupertinoDialog<int?>(
       context: context,
       builder: (_) {
@@ -72,7 +72,7 @@ class SettingsPage extends StatelessWidget {
                       itemExtent: 32,
                       // This sets the initial item.
                       scrollController: FixedExtentScrollController(
-                        initialItem: currentDurationInSec - kStartKoef,
+                        initialItem: (currentDurationInSec - kStartKoef)~/ 5,
                       ),
                       onSelectedItemChanged: (int selectedItem) {
                         setState(() {
@@ -88,11 +88,11 @@ class SettingsPage extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      context.pop(value + kStartKoef);
+                      context.pop((value * 5) + kStartKoef);
                     },
                     child: Text(
                       'Ok',
-                      style: AppConst.valueItem,
+                      style: AppTheme.valueItem,
                     ),
                   )
                 ],
@@ -129,12 +129,12 @@ class SettingsItem extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: AppConst.titleItem,
+                style: AppTheme.titleItem,
               ),
               const Spacer(),
               Text(
                 value,
-                style: AppConst.valueItem,
+                style: AppTheme.valueItem,
               ),
             ],
           ),

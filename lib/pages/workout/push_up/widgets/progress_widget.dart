@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_trainer_app/domain/entity/push_up/push_up_trainer.dart';
+import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
 
 class ProgressWidget extends StatelessWidget {
   final List<Training> training;
@@ -17,7 +17,7 @@ class ProgressWidget extends StatelessWidget {
             width: 16,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              color: e.done ? Colors.green : Colors.grey,
+              color: e.successDate != null ? Colors.green : Colors.grey,
             ),
           ),
         )).toList(),

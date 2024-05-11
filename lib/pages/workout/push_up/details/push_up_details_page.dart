@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/common/base/loading_page.dart';
 import 'package:personal_trainer_app/common/util/extensions.dart';
-import 'package:personal_trainer_app/di/get_it.dart';
-import 'package:personal_trainer_app/domain/entity/push_up/push_up_trainer.dart';
+import 'package:personal_trainer_app/di/di_module.dart';
+import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
+import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
+import 'package:personal_trainer_app/domain/gateway/settings_gateway.dart';
 import 'package:personal_trainer_app/main.dart';
 import 'package:personal_trainer_app/pages/workout/push_up/details/bloc/push_up_details_bloc.dart';
 import 'package:personal_trainer_app/pages/workout/push_up/training/start_training_page.dart';
+import 'package:personal_trainer_app/pages/workout/push_up/util/training_type.dart';
 
-class PushUpDetailsPage extends StatelessWidget {
+class TrainingDetailsPage extends StatelessWidget {
   final int indexTrainingLevel;
+  final TrainingType trainingType;
 
-  const PushUpDetailsPage({
+  const TrainingDetailsPage({
     super.key,
     required this.indexTrainingLevel,
+    required this.trainingType,
   });
 
   @override
@@ -21,7 +27,8 @@ class PushUpDetailsPage extends StatelessWidget {
     return BlocProvider<PushUpDetailsBloc>(
       create: (_) => PushUpDetailsBloc(
         indexTrainingLevel: indexTrainingLevel,
-        gateway: getIt.get(),
+        gateway: getIt.get<TrainingGateway>(instanceName: trainingType.value,),
+        settingsGateway: getIt.get<SettingsGateway>(),
       ),
       child: BlocBuilder<PushUpDetailsBloc, PushUpDetailsModel>(
         builder: (context, state) {
@@ -31,20 +38,28 @@ class PushUpDetailsPage extends StatelessWidget {
           }
 
           return Scaffold(
+            backgroundColor: AppTheme.background,
             appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              leading: IconButton(
+                onPressed: context.pop,
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: AppTheme.white,
+                ),
+              ),
+              automaticallyImplyLeading: false,
               title: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Уровень ${trainingLevel.level}',
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: AppTheme.appBarTitle,
                   ),
                   Text(
                     'От ${trainingLevel.minRange} до ${trainingLevel.maxRange}',
-                    style: const TextStyle(
-                      fontSize: 12,
-                    ),
+                    style: AppTheme.description,
                   ),
                 ],
               ),
@@ -66,6 +81,7 @@ class PushUpDetailsPage extends StatelessWidget {
                               context
                                   .push(StartTrainingPage(
                                 training: training,
+                                restTime: state.restTime,
                               ))
                                   .then((value) {
                                 if (value != null && value == true) {
@@ -78,11 +94,11 @@ class PushUpDetailsPage extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(
-                                  training.done
+                                  training.successDate != null
                                       ? Icons.workspace_premium_outlined
                                       : Icons.unpublished_outlined,
                                   color:
-                                      training.done ? Colors.green : Colors.grey,
+                                      training.successDate != null ? Colors.green : Colors.grey,
                                 ),
                                 16.h,
                                 const Icon(Icons.label_important)
@@ -111,6 +127,8 @@ class PushUpDetailsPage extends StatelessWidget {
       value += isLast ? '${element.$2}' : '${element.$2}, ';
     }
 
-    return value;
+    final count = training.pushUpsCount.reduce((a, b) => a + b);
+
+    return '$value ($count)';
   }
 }
