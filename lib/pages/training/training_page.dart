@@ -13,7 +13,10 @@ import 'package:personal_trainer_app/pages/training/widgets/progress_widget.dart
 
 class TrainingPage extends StatelessWidget {
   final TrainingType trainingType;
-  const TrainingPage({super.key, required this.trainingType,});
+  const TrainingPage({
+    super.key,
+    required this.trainingType,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,10 @@ class TrainingPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        title: Text(trainingType.trainingPageTitle, style: AppTheme.appBarTitle,),
+        title: Text(
+          trainingType.trainingPageTitle,
+          style: AppTheme.appBarTitle,
+        ),
         leading: IconButton(
           onPressed: context.pop,
           icon: Icon(
@@ -32,52 +38,59 @@ class TrainingPage extends StatelessWidget {
         ),
       ),
       body: BlocProvider<PushUpsBloc>(
-        create: (_)
-            => PushUpsBloc(gateway: getIt.get<TrainingGateway>(instanceName: trainingType.value)),
-        child: BlocBuilder<PushUpsBloc, PushUpsModel>(
-            builder: (context, state) {
-              final trainer = state.trainer;
-              if (trainer.levels.isEmpty) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+        create: (_) => PushUpsBloc(
+            gateway:
+                getIt.get<TrainingGateway>(instanceName: trainingType.value)),
+        child:
+            BlocBuilder<PushUpsBloc, PushUpsModel>(builder: (context, state) {
+          final trainer = state.trainer;
+          if (trainer.levels.isEmpty) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-              return ListView.builder(
-                padding: const EdgeInsets.all(16),
-                  itemCount: trainer.levels.length,
-                  itemBuilder: (context, index) {
-                    final TrainingLevel trainingLevel = trainer.levels[index];
+          return ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: trainer.levels.length,
+              itemBuilder: (context, index) {
+                final TrainingLevel trainingLevel = trainer.levels[index];
 
-                    return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 4,),
-                      child: Card(
-                        elevation: 5,
-                        color: Colors.white,
-                        child: ListTile(
-                          onTap: (){
-                            context.push(TrainingDetailsPage(indexTrainingLevel: index, trainingType: trainingType,));
-                          },
-                          title: Text('Уровень ${trainingLevel.level}'),
-                          subtitle: Text(
-                              'От ${trainingLevel.minRange} до ${trainingLevel.maxRange}',),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              ProgressWidget(
-                                training: trainingLevel.training,
-                              ),
-                              16.h,
-                              const Icon(
-                                Icons.label_important,
-                              )
-                            ],
-                          ),
-                        ),
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 4,
+                  ),
+                  child: Card(
+                    elevation: 5,
+                    color: Colors.white,
+                    child: ListTile(
+                      onTap: () {
+                        context.push(TrainingDetailsPage(
+                          indexTrainingLevel: index,
+                          trainingType: trainingType,
+                        ));
+                      },
+                      title: Text('Уровень ${trainingLevel.level}'),
+                      subtitle: Text(
+                        'От ${trainingLevel.minRange} до ${trainingLevel.maxRange}',
                       ),
-                    );
-                  });
-            }),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ProgressWidget(
+                            training: trainingLevel.training,
+                          ),
+                          16.h,
+                          const Icon(
+                            Icons.label_important,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+        }),
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/common/util/seconds_converter.dart';
@@ -38,26 +37,34 @@ class SettingsPage extends StatelessWidget {
                   title: 'Время отдыха',
                   value: parseSeconds(state.restDuration.inSeconds),
                   onTap: () {
-                    _showNumberPicker(context, state.restDuration.inSeconds).then((value) {
-                      if(value != null){
-                        context.read<SettingsBloc>().setRestTime(Duration(seconds: value));
+                    _showNumberPicker(context, state.restDuration.inSeconds)
+                        .then((value) {
+                      if (value != null) {
+                        context
+                            .read<SettingsBloc>()
+                            .setRestTime(Duration(seconds: value));
                       }
                     });
                   },
                 ),
                 const SettingsTitle(title: 'Личные достижения: '),
                 ...TrainingType.values.map((e) {
-                  return  SettingsItem(value: state.maxReps[e] != null ? state.maxReps[e].toString() : '-', title: e.settingsPageStatisticsTitle, onTap: (){
-                    context.push<bool>( CheckLevelPage(trainingType: e)).then((value) {
-                      if(value != null && value){
-                        context.read<SettingsBloc>().updateReps();
-                      }
-                    });
-                  },);
-
+                  return SettingsItem(
+                    value: state.maxReps[e] != null
+                        ? state.maxReps[e].toString()
+                        : '-',
+                    title: e.settingsPageStatisticsTitle,
+                    onTap: () {
+                      context
+                          .push<bool>(CheckLevelPage(trainingType: e))
+                          .then((value) {
+                        if (value != null && value) {
+                          context.read<SettingsBloc>().updateReps();
+                        }
+                      });
+                    },
+                  );
                 }),
-
-
               ],
             ),
           );
@@ -66,7 +73,8 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Future<int?> _showNumberPicker(BuildContext context, int currentDurationInSec) {
+  Future<int?> _showNumberPicker(
+      BuildContext context, int currentDurationInSec) {
     const kStartKoef = 30;
     final listNumbers = List.generate(31, (index) => (index * 5) + kStartKoef);
     return showCupertinoDialog<int?>(
@@ -88,7 +96,7 @@ class SettingsPage extends StatelessWidget {
                       itemExtent: 32,
                       // This sets the initial item.
                       scrollController: FixedExtentScrollController(
-                        initialItem: (currentDurationInSec - kStartKoef)~/ 5,
+                        initialItem: (currentDurationInSec - kStartKoef) ~/ 5,
                       ),
                       onSelectedItemChanged: (int selectedItem) {
                         setState(() {
@@ -123,7 +131,11 @@ class SettingsPage extends StatelessWidget {
 
 class SettingsTitle extends StatelessWidget {
   final String title;
-  const SettingsTitle ({super.key, required this.title,});
+
+  const SettingsTitle({
+    super.key,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +154,6 @@ class SettingsTitle extends StatelessWidget {
     );
   }
 }
-
 
 class SettingsItem extends StatelessWidget {
   final String title;
@@ -173,11 +184,21 @@ class SettingsItem extends StatelessWidget {
                   style: AppTheme.titleItem,
                 ),
               ),
-              SizedBox(width: 16,),
+              const SizedBox(
+                width: 16,
+              ),
               Text(
                 value,
                 style: AppTheme.valueItem,
               ),
+              if (onTap != null)
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Icon(
+                    Icons.keyboard_arrow_right_rounded,
+                    color: AppTheme.white,
+                  ),
+                ),
             ],
           ),
         ),

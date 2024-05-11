@@ -2,9 +2,9 @@ import 'package:personal_trainer_app/di/di_module.dart';
 import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 
 enum TrainingType {
-  pushUps ('pushUps'),
-  pullUps ('pullUps'),
-  bodyLifts ('bodyLifts');
+  pushUps('pushUps'),
+  pullUps('pullUps'),
+  bodyLifts('bodyLifts');
 
   final String value;
 
@@ -21,20 +21,23 @@ extension TrainingTypeExtension on TrainingType {
   }
 
   String get trainingPageTitle => switch (this) {
-  TrainingType.pushUps => 'Программа отжиманий',
-  TrainingType.pullUps => 'Программа подтягиваний',
-  TrainingType.bodyLifts => 'Тренировка пресса',
-  };
+        TrainingType.pushUps => 'Программа отжиманий',
+        TrainingType.pullUps => 'Программа подтягиваний',
+        TrainingType.bodyLifts => 'Тренировка пресса',
+      };
 
   String get settingsPageStatisticsTitle => switch (this) {
-  TrainingType.pushUps => 'Максимальное количество отжиманий',
-  TrainingType.pullUps => 'Максимальное количество подтягиваний',
-  TrainingType.bodyLifts => 'Максимальное количество подъемов туловища',
-  };
+        TrainingType.pushUps => 'Максимальное количество отжиманий',
+        TrainingType.pullUps => 'Максимальное количество подтягиваний',
+        TrainingType.bodyLifts => 'Максимальное количество подъемов туловища',
+      };
 
   String get checkLevelDescription => switch (this) {
-  TrainingType.pushUps => 'Выполните максимальное количество отжиманий и нажмите кнопку \"Продолжить\"',
-  TrainingType.pullUps => 'Выполните максимальное количество подтягиваний и нажмите кнопку \"Продолжить\"',
-  TrainingType.bodyLifts => 'Выполните максимальное количество подъемов туловища и нажмите кнопку \"Продолжить\"',
-  };
+        TrainingType.pushUps =>
+          'Выполните максимальное количество отжиманий и нажмите кнопку \"Продолжить\"',
+        TrainingType.pullUps =>
+          'Выполните максимальное количество подтягиваний и нажмите кнопку \"Продолжить\"',
+        TrainingType.bodyLifts =>
+          'Выполните максимальное количество подъемов туловища и нажмите кнопку \"Продолжить\"',
+      };
 }

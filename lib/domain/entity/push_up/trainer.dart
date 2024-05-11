@@ -16,7 +16,7 @@ class Trainer {
 
   Map<String, dynamic> toJson() => _$TrainerToJson(this);
 
-  Trainer.empty(): levels = [];
+  Trainer.empty() : levels = [];
 
   Trainer copyWith({
     List<TrainingLevel>? levels,
@@ -50,7 +50,11 @@ class TrainingLevel {
 
   Map<String, dynamic> toJson() => _$TrainingLevelToJson(this);
 
-  TrainingLevel.empty(): level = -1, minRange = -1, maxRange = -1, training = [];
+  TrainingLevel.empty()
+      : level = -1,
+        minRange = -1,
+        maxRange = -1,
+        training = [];
 
   TrainingLevel copyWith({
     int? level,
@@ -84,7 +88,9 @@ class Training {
 
   Map<String, dynamic> toJson() => _$TrainingToJson(this);
 
-  Training.empty(): pushUpsCount = [], successDate = null;
+  Training.empty()
+      : pushUpsCount = [],
+        successDate = null;
 
   Training copyWith({
     List<int>? pushUpsCount,

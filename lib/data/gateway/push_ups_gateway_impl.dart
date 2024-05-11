@@ -19,9 +19,7 @@ class PushUpsGatewayImpl implements TrainingGateway {
 
   @override
   Future<Trainer> getPushUpTrainer() async {
-    const tc = TrainingCalculator(
-      trainingInLevels: 3
-    );
+    const tc = TrainingCalculator(trainingInLevels: 3);
     try {
       final pf = await prefs;
 
@@ -68,5 +66,3 @@ class PushUpsGatewayImpl implements TrainingGateway {
     return (await prefs).remove(_prefKey);
   }
 }
-
-

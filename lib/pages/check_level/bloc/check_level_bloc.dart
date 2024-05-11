@@ -6,30 +6,36 @@ class CheckLevelBloc extends Cubit<CheckLevelModel> {
   final TrainingType trainingType;
   final SettingsGateway settingsGateway;
 
-  CheckLevelBloc({required this.trainingType, required this.settingsGateway,}):super(CheckLevelModel.empty()){
+  CheckLevelBloc({
+    required this.trainingType,
+    required this.settingsGateway,
+  }) : super(CheckLevelModel.empty()) {
     _getSettingsReps();
   }
 
-  void _getSettingsReps() async{
-    emit(state.copyWith(maxReps: await settingsGateway.getMaxReps(trainingType)));
+  void _getSettingsReps() async {
+    emit(state.copyWith(
+        maxReps: await settingsGateway.getMaxReps(trainingType)));
   }
 
-  void setMaxReps() async{
+  void setMaxReps() async {
     await settingsGateway.setMaxReps(trainingType, state.maxReps);
   }
 
   void updateMaxReps(int reps) {
     var currentReps = reps;
-    if(currentReps < 0) currentReps = 0;
+    if (currentReps < 0) currentReps = 0;
 
     emit(state.copyWith(maxReps: currentReps));
   }
 }
 
-class CheckLevelModel{
+class CheckLevelModel {
   final int maxReps;
 
-  CheckLevelModel({required this.maxReps,});
+  CheckLevelModel({
+    required this.maxReps,
+  });
   CheckLevelModel.empty() : maxReps = 0;
 
   CheckLevelModel copyWith({

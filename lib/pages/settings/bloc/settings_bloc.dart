@@ -23,7 +23,7 @@ class SettingsBloc extends Cubit<SettingsModel> {
     emit(state.copyWith(restDuration: restTime));
   }
 
-  void updateReps() async{
+  void updateReps() async {
     emit(state.copyWith(maxReps: await _getReps()));
   }
 

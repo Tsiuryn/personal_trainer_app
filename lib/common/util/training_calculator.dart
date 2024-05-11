@@ -1,7 +1,6 @@
 import 'package:personal_trainer_app/domain/entity/push_up/trainer.dart';
 
 class TrainingCalculator {
-
   /// Начальное количество повторений
   final int initialReps;
 
@@ -17,23 +16,18 @@ class TrainingCalculator {
   /// коэффициент сложности уровня
   final double difficultyFactor;
 
-
-  const TrainingCalculator({
-    this.initialReps = 6,
-    this.repsIncrement = 5,
-    this.numberOfLevels = 29,
-    this.trainingInLevels = 5,
-    this.difficultyFactor = .8
-  });
-
+  const TrainingCalculator(
+      {this.initialReps = 6,
+      this.repsIncrement = 5,
+      this.numberOfLevels = 29,
+      this.trainingInLevels = 5,
+      this.difficultyFactor = .8});
 
   Trainer workoutList() {
-
-
     List<TrainingLevel> levels = [];
 
-    int checkNumber(int count){
-      if(count < 1) return 1;
+    int checkNumber(int count) {
+      if (count < 1) return 1;
 
       return count;
     }
@@ -48,7 +42,8 @@ class TrainingCalculator {
 
       int min = minReps;
       for (int workout = 1; workout <= trainingInLevels; workout++) {
-        int firstSetReps = checkNumber(((min * difficultyFactor) - 1.0).toInt());
+        int firstSetReps =
+            checkNumber(((min * difficultyFactor) - 1.0).toInt());
         int secondSetReps = checkNumber(firstSetReps + 2);
         int thirdSetReps = checkNumber(firstSetReps - 1);
         int fourthSetReps = checkNumber(firstSetReps - 1);
@@ -84,5 +79,4 @@ class TrainingCalculator {
 
     return Trainer(levels: levels);
   }
-
 }

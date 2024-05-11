@@ -22,20 +22,26 @@ class WorkoutPage extends StatelessWidget {
                       imagePath: AppRes.pushUp,
                       title: 'Отжимания',
                       onTap: () {
-                        context.push(TrainingPage(trainingType: TrainingType.pushUps,));
+                        context.push(TrainingPage(
+                          trainingType: TrainingType.pushUps,
+                        ));
                       }),
                   _WorkoutItem(
                     imagePath: AppRes.abTrain,
                     title: 'Пресс',
                     onTap: () {
-                      context.push(TrainingPage(trainingType: TrainingType.bodyLifts,));
+                      context.push(TrainingPage(
+                        trainingType: TrainingType.bodyLifts,
+                      ));
                     },
                   ),
                   _WorkoutItem(
                       imagePath: AppRes.pullUp,
                       title: 'Подтягивания',
                       onTap: () {
-                        context.push(TrainingPage(trainingType: TrainingType.pullUps,));
+                        context.push(TrainingPage(
+                          trainingType: TrainingType.pullUps,
+                        ));
                       }),
                   const SizedBox(
                     height: 32,

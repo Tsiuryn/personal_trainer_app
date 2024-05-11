@@ -18,11 +18,10 @@ class CheckLevelPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CheckLevelBloc>(
-      create: (_) =>
-          CheckLevelBloc(
-            trainingType: trainingType,
-            settingsGateway: getIt.get<SettingsGateway>(),
-          ),
+      create: (_) => CheckLevelBloc(
+        trainingType: trainingType,
+        settingsGateway: getIt.get<SettingsGateway>(),
+      ),
       child: BlocBuilder<CheckLevelBloc, CheckLevelModel>(
         builder: (context, state) {
           return Scaffold(
@@ -58,11 +57,14 @@ class CheckLevelPage extends StatelessWidget {
                 ),
                 const Spacer(),
                 OutlinedButton(
-                  onPressed: (){
+                  onPressed: () {
                     context.read<CheckLevelBloc>().setMaxReps();
                     context.pop(true);
                   },
-                  child: Text('Продолжить', style: AppTheme.trainingButtonTextStyle,),
+                  child: Text(
+                    'Продолжить',
+                    style: AppTheme.trainingButtonTextStyle,
+                  ),
                 ),
               ],
             ),
@@ -79,30 +81,48 @@ class _BlockCount extends StatelessWidget {
 
   const _BlockCount({required this.initialValue, required this.onTap});
 
-  Widget getIconButton(String title,
-      VoidCallback onTap,) =>
-      FloatingActionButton(onPressed: onTap, mini: true, child: Text(title),);
+  Widget getIconButton(
+    String title,
+    VoidCallback onTap,
+  ) =>
+      FloatingActionButton(
+        onPressed: onTap,
+        mini: true,
+        child: Text(title),
+      );
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        getIconButton('+5', () {onTap(initialValue + 5);}),
+        getIconButton('+5', () {
+          onTap(initialValue + 5);
+        }),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32,),
+          padding: const EdgeInsets.symmetric(
+            vertical: 32,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              getIconButton('-1', () {onTap(initialValue - 1);}),
-              Text(initialValue.toString(), style: AppTheme.trainingTimer,),
-              getIconButton('+1', () {onTap(initialValue + 1);}),
+              getIconButton('-1', () {
+                onTap(initialValue - 1);
+              }),
+              Text(
+                initialValue.toString(),
+                style: AppTheme.trainingTimer,
+              ),
+              getIconButton('+1', () {
+                onTap(initialValue + 1);
+              }),
             ],
           ),
         ),
-        getIconButton('-5', () {onTap(initialValue - 5);}),
+        getIconButton('-5', () {
+          onTap(initialValue - 5);
+        }),
       ],
     );
   }
 }
-

@@ -18,7 +18,8 @@ class StartTrainingPage extends StatefulWidget {
   State<StartTrainingPage> createState() => _StartTrainingPageState();
 }
 
-class _StartTrainingPageState extends State<StartTrainingPage> with StartTrainingController {
+class _StartTrainingPageState extends State<StartTrainingPage>
+    with StartTrainingController {
   Future<T?> _showDialog<T>({
     bool isPop = false,
   }) async {
@@ -71,10 +72,8 @@ class _StartTrainingPageState extends State<StartTrainingPage> with StartTrainin
   Widget build(BuildContext context) {
     final time = currentTime();
     final message = isWorkNow ? "Работаем!" : "Отдых";
-    final titleButton =
-        isWorkNow ? 'Отдых' : 'Поехали';
-    final bgColor =
-        isWorkNow ? Colors.red : Colors.green;
+    final titleButton = isWorkNow ? 'Отдых' : 'Поехали';
+    final bgColor = isWorkNow ? Colors.red : Colors.green;
 
     return PopScope(
       onPopInvoked: (_) {
@@ -94,7 +93,10 @@ class _StartTrainingPageState extends State<StartTrainingPage> with StartTrainin
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: AppTheme.white,),
+            icon: Icon(
+              Icons.arrow_back,
+              color: AppTheme.white,
+            ),
             onPressed: () {
               if (isFinishState) {
                 context.pop(true);
@@ -156,11 +158,13 @@ class _StartTrainingPageState extends State<StartTrainingPage> with StartTrainin
                     child: IgnorePointer(
                       ignoring: isFinishState,
                       child: Opacity(
-                        opacity:
-                            isFinishState ? .2 : 1,
+                        opacity: isFinishState ? .2 : 1,
                         child: OutlinedButton(
                           onPressed: onTapAction,
-                          child: Text(titleButton, style: AppTheme.trainingButtonTextStyle,),
+                          child: Text(
+                            titleButton,
+                            style: AppTheme.trainingButtonTextStyle,
+                          ),
                         ),
                       ),
                     ),

@@ -46,8 +46,7 @@ class AppTheme {
   ///    fontWeight: FontWeight.w600,
   ///    color: white,
   ///  );
-  static TextStyle titleSettings =
-  TextStyle(
+  static TextStyle titleSettings = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w600,
     color: white,

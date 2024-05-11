@@ -37,8 +37,8 @@ mixin StartTrainingController<T extends StatefulWidget> on State<T> {
     return null;
   }
 
-  double getPercentTime(){
-    if(isWorkNow) return 0;
+  double getPercentTime() {
+    if (isWorkNow) return 0;
 
     return _sec / restDuration.inSeconds;
   }
@@ -50,7 +50,7 @@ mixin StartTrainingController<T extends StatefulWidget> on State<T> {
   bool get isFinishState => isLastIndex && !isWorkNow;
 
   void onTapAction() {
-    if(isFinishState) return;
+    if (isFinishState) return;
 
     setState(() {
       _changeState();
@@ -93,8 +93,8 @@ mixin StartTrainingController<T extends StatefulWidget> on State<T> {
     }
   }
 
-  void _checkIsFinishState(){
-    if(isFinishState){
+  void _checkIsFinishState() {
+    if (isFinishState) {
       onSuccess();
     }
   }

@@ -27,95 +27,99 @@ class TrainingDetailsPage extends StatelessWidget {
     return BlocProvider<PushUpDetailsBloc>(
       create: (_) => PushUpDetailsBloc(
         indexTrainingLevel: indexTrainingLevel,
-        gateway: getIt.get<TrainingGateway>(instanceName: trainingType.value,),
+        gateway: getIt.get<TrainingGateway>(
+          instanceName: trainingType.value,
+        ),
         settingsGateway: getIt.get<SettingsGateway>(),
       ),
       child: BlocBuilder<PushUpDetailsBloc, PushUpDetailsModel>(
-        builder: (context, state) {
-          final trainingLevel = state.trainingLevel;
-          if(trainingLevel.level == -1){
-            return const LoadingPage();
-          }
+          builder: (context, state) {
+        final trainingLevel = state.trainingLevel;
+        if (trainingLevel.level == -1) {
+          return const LoadingPage();
+        }
 
-          return Scaffold(
-            backgroundColor: AppTheme.background,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              leading: IconButton(
-                onPressed: context.pop,
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: AppTheme.white,
-                ),
-              ),
-              automaticallyImplyLeading: false,
-              title: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Уровень ${trainingLevel.level}',
-                    style: AppTheme.appBarTitle,
-                  ),
-                  Text(
-                    'От ${trainingLevel.minRange} до ${trainingLevel.maxRange}',
-                    style: AppTheme.description,
-                  ),
-                ],
+        return Scaffold(
+          backgroundColor: AppTheme.background,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            leading: IconButton(
+              onPressed: context.pop,
+              icon: Icon(
+                Icons.arrow_back,
+                color: AppTheme.white,
               ),
             ),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            automaticallyImplyLeading: false,
+            title: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (_, index) {
-                      final Training training = trainingLevel.training[index];
-
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 8),
-                        child: Card(
-                          child: ListTile(
-                            onTap: () {
-                              context
-                                  .push(StartTrainingPage(
-                                training: training,
-                                restTime: state.restTime,
-                              ))
-                                  .then((value) {
-                                if (value != null && value == true) {
-                                  context.read<PushUpDetailsBloc>().finishTraining(index);
-                                }
-                              });
-                            },
-                            title: Text(_getCountPushUps(training)),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  training.successDate != null
-                                      ? Icons.workspace_premium_outlined
-                                      : Icons.unpublished_outlined,
-                                  color:
-                                      training.successDate != null ? Colors.green : Colors.grey,
-                                ),
-                                16.h,
-                                const Icon(Icons.label_important)
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    itemCount: trainingLevel.training.length,
-                  ),
-                )
+                Text(
+                  'Уровень ${trainingLevel.level}',
+                  style: AppTheme.appBarTitle,
+                ),
+                Text(
+                  'От ${trainingLevel.minRange} до ${trainingLevel.maxRange}',
+                  style: AppTheme.description,
+                ),
               ],
             ),
-          );
-        }
-      ),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (_, index) {
+                    final Training training = trainingLevel.training[index];
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8),
+                      child: Card(
+                        child: ListTile(
+                          onTap: () {
+                            context
+                                .push(StartTrainingPage(
+                              training: training,
+                              restTime: state.restTime,
+                            ))
+                                .then((value) {
+                              if (value != null && value == true) {
+                                context
+                                    .read<PushUpDetailsBloc>()
+                                    .finishTraining(index);
+                              }
+                            });
+                          },
+                          title: Text(_getCountPushUps(training)),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                training.successDate != null
+                                    ? Icons.workspace_premium_outlined
+                                    : Icons.unpublished_outlined,
+                                color: training.successDate != null
+                                    ? Colors.green
+                                    : Colors.grey,
+                              ),
+                              16.h,
+                              const Icon(Icons.label_important)
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: trainingLevel.training.length,
+                ),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 
