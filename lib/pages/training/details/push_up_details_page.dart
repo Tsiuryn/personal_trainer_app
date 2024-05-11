@@ -95,6 +95,12 @@ class TrainingDetailsPage extends StatelessWidget {
                             });
                           },
                           title: Text(_getCountPushUps(training)),
+                          subtitle: training.successDate != null ? Text(
+                            '${DateFormat.yMEd('ru').format(training.successDate!)} ${DateFormat.Hm().format(training.successDate!)}',
+                            style: AppTheme.description.copyWith(
+                              color: AppTheme.black,
+                            ),
+                          ) : null,
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -110,13 +116,6 @@ class TrainingDetailsPage extends StatelessWidget {
                                         ? Colors.green
                                         : Colors.grey,
                                   ),
-                                  if (training.successDate != null)
-                                    Text(
-                                      '${DateFormat.yMEd('ru').format(training.successDate!)} ${DateFormat.Hm().format(training.successDate!)}',
-                                      style: AppTheme.description.copyWith(
-                                        color: AppTheme.black,
-                                      ),
-                                    )
                                 ],
                               ),
                               16.h,
