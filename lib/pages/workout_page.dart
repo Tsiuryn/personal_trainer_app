@@ -23,7 +23,7 @@ class WorkoutPage extends StatelessWidget {
                       imagePath: AppRes.pushUp,
                       title: 'Отжимания',
                       onTap: () {
-                        context.push(TrainingPage(
+                        context.push(const TrainingPage(
                           trainingType: TrainingType.pushUps,
                         ));
                       }),
@@ -31,7 +31,7 @@ class WorkoutPage extends StatelessWidget {
                     imagePath: AppRes.abTrain,
                     title: 'Пресс',
                     onTap: () {
-                      context.push(TrainingPage(
+                      context.push(const TrainingPage(
                         trainingType: TrainingType.bodyLifts,
                       ));
                     },
@@ -40,7 +40,7 @@ class WorkoutPage extends StatelessWidget {
                       imagePath: AppRes.pullUp,
                       title: 'Подтягивания',
                       onTap: () {
-                        context.push(TrainingPage(
+                        context.push(const TrainingPage(
                           trainingType: TrainingType.pullUps,
                         ));
                       }),
@@ -48,7 +48,7 @@ class WorkoutPage extends StatelessWidget {
                       imagePath: AppRes.squats,
                       title: 'Приседания',
                       onTap: () {
-                        context.push(TrainingPage(
+                        context.push(const TrainingPage(
                           trainingType: TrainingType.squats,
                         ));
                       }),

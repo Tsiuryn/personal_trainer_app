@@ -27,7 +27,8 @@ class PushUpDetailsBloc extends Cubit<PushUpDetailsModel> {
     ));
   }
 
-  void finishTraining(int indexTraining) async {
+  void finishTraining(
+      int indexTraining, StatisticTraining statisticTraining) async {
     final trainer = await gateway.getTrainer();
 
     // Directly update the relevant training entry, if it exists.
@@ -35,7 +36,7 @@ class PushUpDetailsBloc extends Cubit<PushUpDetailsModel> {
       // Update the done status of the specific training.
       final updatedTraining =
           trainer.levels[indexTrainingLevel].training[indexTraining].copyWith(
-        successDate: DateTime.now(),
+        statisticTraining: statisticTraining,
       );
 
       // Update the list in-place, as Dart lists are mutable.

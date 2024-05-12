@@ -1,8 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:personal_trainer_app/di/di_module.dart';
 import 'package:personal_trainer_app/domain/entity/max_reps.dart';
 import 'package:personal_trainer_app/domain/gateway/settings_gateway.dart';
-import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
 import 'package:personal_trainer_app/pages/training/util/training_type.dart';
 
 class SettingsBloc extends Cubit<SettingsModel> {

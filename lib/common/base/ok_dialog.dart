@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/main.dart';
 

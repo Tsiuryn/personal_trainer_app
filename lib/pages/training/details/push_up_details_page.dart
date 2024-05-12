@@ -82,25 +82,27 @@ class TrainingDetailsPage extends StatelessWidget {
                         child: ListTile(
                           onTap: () {
                             context
-                                .push(StartTrainingPage(
+                                .push<StatisticTraining?>(StartTrainingPage(
                               training: training,
                               restTime: state.restTime,
                             ))
                                 .then((value) {
-                              if (value != null && value == true) {
+                              if (value != null) {
                                 context
                                     .read<PushUpDetailsBloc>()
-                                    .finishTraining(index);
+                                    .finishTraining(index, value);
                               }
                             });
                           },
                           title: Text(_getCountPushUps(training)),
-                          subtitle: training.successDate != null ? Text(
-                            '${DateFormat.yMEd('ru').format(training.successDate!)} ${DateFormat.Hm().format(training.successDate!)}',
-                            style: AppTheme.description.copyWith(
-                              color: AppTheme.black,
-                            ),
-                          ) : null,
+                          subtitle: training.statisticTraining != null
+                              ? Text(
+                                  _getSubtitle(training.statisticTraining!),
+                                  style: AppTheme.description.copyWith(
+                                    color: AppTheme.black,
+                                  ),
+                                )
+                              : null,
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -109,10 +111,10 @@ class TrainingDetailsPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    training.successDate != null
+                                    training.statisticTraining != null
                                         ? Icons.workspace_premium_outlined
                                         : Icons.unpublished_outlined,
-                                    color: training.successDate != null
+                                    color: training.statisticTraining != null
                                         ? Colors.green
                                         : Colors.grey,
                                   ),
@@ -134,6 +136,10 @@ class TrainingDetailsPage extends StatelessWidget {
         );
       }),
     );
+  }
+
+  String _getSubtitle(StatisticTraining statisticTraining) {
+    return '${DateFormat.yMEd('ru').format(statisticTraining.finishDate)} (${DateFormat.Hm().format(statisticTraining.startDate)} - ${DateFormat.Hm().format(statisticTraining.finishDate)})';
   }
 
   String _getCountPushUps(Training training) {

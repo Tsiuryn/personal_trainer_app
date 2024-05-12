@@ -75,12 +75,12 @@ class TrainingLevel {
 class Training {
   @JsonValue('pushUpsCount')
   final List<int> pushUpsCount;
-  @JsonValue('successDate')
-  final DateTime? successDate;
+  @JsonValue('statisticTraining')
+  final StatisticTraining? statisticTraining;
 
   const Training({
     required this.pushUpsCount,
-    this.successDate,
+    this.statisticTraining,
   });
 
   factory Training.fromJson(Map<String, dynamic> json) =>
@@ -90,15 +90,43 @@ class Training {
 
   Training.empty()
       : pushUpsCount = [],
-        successDate = null;
+        statisticTraining = null;
 
   Training copyWith({
     List<int>? pushUpsCount,
-    DateTime? successDate,
+    StatisticTraining? statisticTraining,
   }) {
     return Training(
       pushUpsCount: pushUpsCount ?? this.pushUpsCount,
-      successDate: successDate ?? this.successDate,
+      statisticTraining: statisticTraining ?? this.statisticTraining,
+    );
+  }
+}
+
+@JsonSerializable()
+class StatisticTraining {
+  @JsonValue('startDate')
+  final DateTime startDate;
+  @JsonValue('finishDate')
+  final DateTime finishDate;
+
+  const StatisticTraining({
+    required this.startDate,
+    required this.finishDate,
+  });
+
+  factory StatisticTraining.fromJson(Map<String, dynamic> json) =>
+      _$StatisticTrainingFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StatisticTrainingToJson(this);
+
+  StatisticTraining copyWith({
+    DateTime? startDate,
+    DateTime? finishDate,
+  }) {
+    return StatisticTraining(
+      startDate: startDate ?? this.startDate,
+      finishDate: finishDate ?? this.finishDate,
     );
   }
 }

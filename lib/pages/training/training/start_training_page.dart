@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
 import 'package:personal_trainer_app/common/base/ok_dialog.dart';
@@ -21,6 +23,14 @@ class StartTrainingPage extends StatefulWidget {
 
 class _StartTrainingPageState extends State<StartTrainingPage>
     with StartTrainingController {
+  late DateTime _startDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _startDate = DateTime.now();
+  }
+
   void canPop(BuildContext context, {bool? isSuccess}) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.pop(isSuccess);
@@ -148,7 +158,10 @@ class _StartTrainingPageState extends State<StartTrainingPage>
             description: 'Данные успешно сохранены!',
             showCancel: false)
         .then((value) {
-      canPop(context, isSuccess: true);
+      context.pop(StatisticTraining(
+        startDate: _startDate,
+        finishDate: DateTime.now(),
+      ));
     });
   }
 

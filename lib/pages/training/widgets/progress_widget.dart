@@ -23,7 +23,9 @@ class ProgressWidget extends StatelessWidget {
                     width: 16,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
-                      color: e.successDate != null ? Colors.green : Colors.grey,
+                      color: e.statisticTraining != null
+                          ? Colors.green
+                          : Colors.grey,
                     ),
                   ),
                 ))

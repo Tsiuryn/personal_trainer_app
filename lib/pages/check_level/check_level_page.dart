@@ -82,7 +82,7 @@ class CheckLevelPage extends StatelessWidget {
               ),
               Visibility(
                 visible: state.state == CheckLevelModelLoading.loading,
-                child: CircularProgressIndicator(),
+                child: const CircularProgressIndicator(),
               ),
             ],
           );

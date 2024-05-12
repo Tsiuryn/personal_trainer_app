@@ -58,7 +58,7 @@ class TrainingPage extends StatelessWidget {
                 final TrainingLevel trainingLevel = trainer.levels[index];
 
                 return Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     vertical: 4,
                   ),
                   child: Card(

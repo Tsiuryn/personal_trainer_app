@@ -1,7 +1,6 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_trainer_app/app/app_theme.dart';
-import 'package:personal_trainer_app/pages/statistic_page.dart';
 import 'package:personal_trainer_app/pages/settings/settings_page.dart';
 import 'package:personal_trainer_app/pages/workout_page.dart';
 
