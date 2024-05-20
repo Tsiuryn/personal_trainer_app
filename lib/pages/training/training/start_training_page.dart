@@ -6,6 +6,7 @@ import 'package:personal_trainer_app/common/base/ok_dialog.dart';
 import 'package:personal_trainer_app/domain/entity/trainer.dart';
 import 'package:personal_trainer_app/main.dart';
 import 'package:personal_trainer_app/pages/training/util/start_training_controller.dart';
+import 'package:wakelock/wakelock.dart';
 
 class StartTrainingPage extends StatefulWidget {
   final Training training;
@@ -29,6 +30,13 @@ class _StartTrainingPageState extends State<StartTrainingPage>
   void initState() {
     super.initState();
     _startDate = DateTime.now();
+    Wakelock.enable();
+  }
+
+  @override
+  void dispose() {
+    Wakelock.disable();
+    super.dispose();
   }
 
   void canPop(BuildContext context, {bool? isSuccess}) {

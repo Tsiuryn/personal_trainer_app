@@ -23,6 +23,8 @@ dependencies:
 
   flutter_launcher_icons: ^0.13.1
 
+  wakelock: ^0.6.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
