@@ -95,7 +95,7 @@ class _WorkoutItem extends StatelessWidget {
                     width: double.infinity,
                     child: Image.asset(
                       imagePath,
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.cover,
                     )),
               ),
               const SizedBox(height: 12),

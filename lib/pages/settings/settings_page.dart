@@ -130,7 +130,7 @@ class SettingsPage extends StatelessWidget {
                       ),
                       onSelectedItemChanged: (int selectedItem) {
                         setState(() {
-                          value = selectedItem;
+                          value = (selectedItem * 5) + kStartKoef;
                         });
                       },
                       children: List<Widget>.generate(listNumbers.length,
@@ -142,7 +142,7 @@ class SettingsPage extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      context.pop((value * 5) + kStartKoef);
+                      context.pop(value);
                     },
                     child: Text(
                       'Ok',
