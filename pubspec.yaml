@@ -17,13 +17,13 @@ dependencies:
   json_annotation: ^4.8.1
   cupertino_icons: ^1.0.2
   custom_navigation_bar: ^0.8.2
-  get_it: ^7.7.0
-  flutter_bloc: ^8.1.5
-  rxdart: ^0.27.7
+  get_it: ^8.0.3
+  flutter_bloc: ^9.0.0
+  rxdart: ^0.28.0
 
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.3
 
-  wakelock: ^0.6.2
+  wakelock_plus: ^1.2.10
 
 dev_dependencies:
   flutter_test:
@@ -31,7 +31,7 @@ dev_dependencies:
 
   json_serializable: ^6.7.1
   build_runner: ^2.4.8
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true

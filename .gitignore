@@ -46,7 +46,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-
 # lock files
 **/*.lock
 
@@ -57,15 +56,14 @@ app.*.map.json
 **/*.g.dart
 **/*.gr.dart
 
-
 # generated pubspec
 **/pubspec_overrides.yaml
 
-.fvm/*
 !.fvm/fvm_config.json
-.fvm/flutter_sdk
 
 *app_config.json
 
-
 .firebase
+
+# FVM Version Cache
+.fvm/
