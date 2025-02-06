@@ -1,8 +1,5 @@
 # Personal trainer
 
-```bash
-flutter pub run flutter_launcher_icons
-```
 
 ![Presentation](https://github.com/Tsiuryn/personal_trainer_app/blob/main/assets/src/trainer.gif)
 
