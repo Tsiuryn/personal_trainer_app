@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:personal_trainer_app/common/util/seconds_converter.dart';
 import 'package:personal_trainer_app/domain/entity/trainer.dart';
+import 'package:vibration/vibration.dart';
 
 mixin StartTrainingController<T extends StatefulWidget> on State<T> {
   @override
@@ -44,7 +45,9 @@ mixin StartTrainingController<T extends StatefulWidget> on State<T> {
   }
 
   TrainingState _currentState = TrainingState.work;
+
   get currentState => _currentState;
+
   bool get isWorkNow => _currentState == TrainingState.work;
 
   bool get isFinishState => isLastIndex && !isWorkNow;
@@ -83,6 +86,9 @@ mixin StartTrainingController<T extends StatefulWidget> on State<T> {
     if (!isWorkNow) {
       _finishTime = DateTime.now().add(restDuration);
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (_sec == 4) {
+          Vibration.vibrate(pattern: [1000, 500, 500, 500, 500, 2000]);
+        }
         setState(() {
           if (_finishTime.isBefore(DateTime.now())) {
             _timer?.cancel();
