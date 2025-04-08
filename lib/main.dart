@@ -36,5 +36,7 @@ extension BuildContextExtension on BuildContext {
   Future<T?> push<T>(Widget widget) =>
       Navigator.of(this).push<T>(MaterialPageRoute(builder: (_) => widget));
 
-  void pop<T>([T? result]) => Navigator.of(this).pop<T>(result);
+  Future<bool> pop<T>([T? result]) => Navigator.of(
+        this,
+      ).maybePop<T>(result);
 }

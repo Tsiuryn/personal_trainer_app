@@ -39,28 +39,24 @@ class _StartTrainingPageState extends State<StartTrainingPage>
     super.dispose();
   }
 
-  void canPop(BuildContext context, {bool? isSuccess}) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.pop(isSuccess);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final time = currentTime();
     final message = isWorkNow ? "Работаем!" : "Отдых";
     final titleButton = isWorkNow ? 'Отдых' : 'Поехали';
     final bgColor = isWorkNow ? Colors.red : Colors.green;
+    var canPop = isFinishState;
 
     return WillPopScope(
       onWillPop: () {
-        if (!isFinishState) {
+        if (!canPop) {
           showOkDialog(context,
                   title: 'Тренировка не завершена!',
                   description: ' При выходе прогресс будет потерян!')
               .then((value) {
-            if (value != null && value == true) {
-              canPop(context);
+            if (value == true && context.mounted) {
+              canPop = true;
+              context.pop();
             }
           });
         }
@@ -77,20 +73,7 @@ class _StartTrainingPageState extends State<StartTrainingPage>
               Icons.arrow_back,
               color: AppTheme.white,
             ),
-            onPressed: () {
-              if (isFinishState) {
-                context.pop(true);
-              } else {
-                showOkDialog(context,
-                        title: 'Тренировка не завершена!',
-                        description: ' При выходе прогресс будет потерян!')
-                    .then((value) {
-                  if (value != null && value == true) {
-                    canPop(context);
-                  }
-                });
-              }
-            },
+            onPressed: context.pop,
           ),
         ),
         body: Row(
@@ -166,10 +149,13 @@ class _StartTrainingPageState extends State<StartTrainingPage>
             description: 'Данные успешно сохранены!',
             showCancel: false)
         .then((value) {
-      context.pop(StatisticTraining(
-        startDate: _startDate,
-        finishDate: DateTime.now(),
-      ));
+      final cContext = context;
+      if (cContext.mounted) {
+        cContext.pop(StatisticTraining(
+          startDate: _startDate,
+          finishDate: DateTime.now(),
+        ));
+      }
     });
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
+  const AppTheme._();
+
   static Color black = Colors.black;
   static Color blue = Colors.blue[700]!;
   static Color yellow = Colors.yellow;
@@ -15,7 +17,7 @@ class AppTheme {
   ///     color: white,
   ///   )
   static TextStyle appBarTitle = TextStyle(
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: FontWeight.w500,
     color: white,
   );

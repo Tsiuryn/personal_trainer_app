@@ -12,7 +12,7 @@ Future<bool?> showOkDialog(
 }) async {
   return showCupertinoDialog<bool?>(
       context: context,
-      builder: (context) {
+      builder: (_) {
         return CupertinoAlertDialog(
           title: Text(title),
           content: description == null ? null : Text(description),
@@ -32,8 +32,8 @@ Future<bool?> showOkDialog(
                 'Ok',
                 style: TextStyle(color: AppTheme.red),
               ),
-              onPressed: () {
-                context.pop(true);
+              onPressed: () async {
+                await context.pop(true);
               },
             )
           ],

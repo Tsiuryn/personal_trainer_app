@@ -10,6 +10,7 @@ import 'package:personal_trainer_app/domain/entity/max_reps.dart';
 import 'package:personal_trainer_app/domain/gateway/settings_gateway.dart';
 import 'package:personal_trainer_app/main.dart';
 import 'package:personal_trainer_app/pages/check_level/check_level_page.dart';
+import 'package:personal_trainer_app/pages/import_export/import_export_page.dart';
 import 'package:personal_trainer_app/pages/settings/bloc/settings_bloc.dart';
 import 'package:personal_trainer_app/pages/training/util/training_type.dart';
 
@@ -93,7 +94,20 @@ class SettingsPage extends StatelessWidget {
                       },
                     );
                   }),
-                  48.h,
+                  const SettingsTitle(title: 'Импорт/экспорт: '),
+                  SettingsItem(
+                    title: 'Импортировать тренировки',
+                    onTap: () {
+                      context.push(ImportExportPage(type: IEPageType.import));
+                    },
+                  ),
+                  SettingsItem(
+                    title: 'Экспортировать тренировки',
+                    onTap: () {
+                      context.push(ImportExportPage(type: IEPageType.export));
+                    },
+                  ),
+                  96.h,
                 ],
               ),
             ),
