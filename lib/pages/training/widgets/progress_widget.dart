@@ -13,23 +13,20 @@ class ProgressWidget extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ...training
-            .map((e) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 2,
-                  ),
-                  child: Container(
-                    height: 8,
-                    width: 16,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: e.statisticTraining != null
-                          ? Colors.green
-                          : Colors.grey,
-                    ),
-                  ),
-                ))
-            .toList(),
+        ...training.map((e) => Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 2,
+              ),
+              child: Container(
+                height: 16,
+                width: 8,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                  color:
+                      e.statisticTraining != null ? Colors.green : Colors.grey,
+                ),
+              ),
+            )),
       ],
     );
   }
