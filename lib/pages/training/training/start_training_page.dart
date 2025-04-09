@@ -25,6 +25,7 @@ class StartTrainingPage extends StatefulWidget {
 class _StartTrainingPageState extends State<StartTrainingPage>
     with StartTrainingController {
   late DateTime _startDate;
+  late var canPop = isFinishState;
 
   @override
   void initState() {
@@ -45,7 +46,6 @@ class _StartTrainingPageState extends State<StartTrainingPage>
     final message = isWorkNow ? "Работаем!" : "Отдых";
     final titleButton = isWorkNow ? 'Отдых' : 'Поехали';
     final bgColor = isWorkNow ? Colors.red : Colors.green;
-    var canPop = isFinishState;
 
     return WillPopScope(
       onWillPop: () {
@@ -83,20 +83,22 @@ class _StartTrainingPageState extends State<StartTrainingPage>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Spacer(),
-                  Text(
-                    message,
-                    style: TextStyle(fontSize: 44, color: bgColor),
-                  ),
                   ListSteps(
                     steps: training.pushUpsCount,
                     currentIndex: currentIndex,
                   ),
                   const Spacer(),
-                  Visibility(
-                    visible: time != null,
-                    maintainState: true,
-                    maintainSize: true,
-                    maintainAnimation: true,
+                  _TextAnimatedWidget(
+                    child: Text(
+                      message,
+                      key: ValueKey(message),
+                      style: TextStyle(fontSize: 44, color: bgColor),
+                    ),
+                  ),
+                  const Spacer(),
+                  AnimatedOpacity(
+                    duration: Duration(milliseconds: 500),
+                    opacity: time != null ? 1 : 0,
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
@@ -151,6 +153,7 @@ class _StartTrainingPageState extends State<StartTrainingPage>
         .then((value) {
       final cContext = context;
       if (cContext.mounted) {
+        canPop = true;
         cContext.pop(StatisticTraining(
           startDate: _startDate,
           finishDate: DateTime.now(),
@@ -178,27 +181,45 @@ class ListSteps extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ...steps.indexed.map((e) {
-                final isSelected = currentIndex == e.$1;
-                final fontSize = isSelected ? 44.0 : 32.0;
-                final textColor = isSelected
-                    ? Colors.blue
-                    : e.$1 < currentIndex
-                        ? Colors.lightGreen
-                        : Colors.red;
+        // Верхняя выбранная цифра
+        _TextAnimatedWidget(
+          child: Text(
+            steps[currentIndex].toString(),
+            key: ValueKey(currentIndex),
+            style: TextStyle(
+              fontSize: 96,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
+            ),
+          ),
+        ),
+        SizedBox(height: 16),
+        // Горизонтальный список цифр
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ...steps.indexed.map((e) {
+              final isSelected = currentIndex == e.$1;
+              final fontSize = isSelected ? 32.0 : 24.0;
+              final textColor = isSelected
+                  ? Colors.blue
+                  : e.$1 < currentIndex
+                      ? Colors.lightGreen
+                      : Colors.red;
 
-                return Padding(
-                  padding: EdgeInsets.only(
-                    right: e.$1 < steps.length - 1 ? 8 : 0,
-                    top: isSelected ? 24 : 0,
-                  ),
+              return AnimatedPadding(
+                duration: Duration(milliseconds: 500),
+                padding: EdgeInsets.only(
+                  right: e.$1 < steps.length - 1 ? 8 : 0,
+                  top: isSelected ? 8 : 0,
+                ),
+                child: Opacity(
+                  opacity: isSelected
+                      ? 0.5
+                      : 1.0, // сделаем выбранный бледнее в списке
                   child: Text(
                     '${e.$2}',
                     style: TextStyle(
@@ -206,12 +227,42 @@ class ListSteps extends StatelessWidget {
                       color: textColor,
                     ),
                   ),
-                );
-              })
-            ],
-          ),
-        )
+                ),
+              );
+            })
+          ],
+        ),
       ],
+    );
+  }
+}
+
+class _TextAnimatedWidget extends StatelessWidget {
+  const _TextAnimatedWidget({
+    required this.child,
+  });
+
+  // final List<int> steps;
+  // final int currentIndex;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 500),
+      transitionBuilder: (child, animation) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: Offset(0, 1),
+            end: Offset(0, 0),
+          ).animate(animation),
+          child: FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
+      },
+      child: child,
     );
   }
 }

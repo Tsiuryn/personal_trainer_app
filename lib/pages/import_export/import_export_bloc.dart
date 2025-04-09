@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:personal_trainer_app/di/di_module.dart';
 import 'package:personal_trainer_app/domain/entity/trainer.dart';
 import 'package:personal_trainer_app/domain/gateway/training_gateway.dart';
@@ -21,10 +22,13 @@ class ImportExportBloc extends Cubit<ImportExportState> {
     Share.shareXFiles(
       [XFile.fromData(utf8.encode(programm), mimeType: 'text/plain')],
       fileNameOverrides: [
-        '${trainingType.trainingPageTitle}_${DateTime.now()}.txt'
+        '${trainingType.trainingPageTitle}_${_currentDate()}.json'
       ],
     );
   }
+
+  String _currentDate() =>
+      DateFormat('dd_MM_yyyy__HH_mm_ss').format(DateTime.now());
 
   void importData(TrainingType trainingType, String programm) async {
     final gateway =
